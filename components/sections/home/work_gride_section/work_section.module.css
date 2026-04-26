@@ -1,0 +1,149 @@
+.sec {
+  padding: 96px 0;
+  background: var(--white);
+}
+
+.wrap {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0 96px;
+}
+
+.hd {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 44px;
+  gap: 32px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-family: var(--ff-h);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.h2 em {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.viewAll {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--blue);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color 0.2s;
+}
+
+.viewAll:hover {
+  border-bottom-color: var(--blue);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--s1);
+  border: 1px solid var(--line);
+  transition: box-shadow 0.25s, transform 0.25s;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: var(--s3);
+  transform: translateY(-4px);
+}
+
+.img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c1 { background: #EBF0FC; }
+.c2 { background: #EDF1FB; }
+.c3 { background: #F0F3FC; }
+.c4 { background: #EDF1FB; }
+.c5 { background: #EBF0FC; }
+.c6 { background: #F0F3FC; }
+
+.ph {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(13, 60, 194, 0.16);
+}
+
+.info {
+  padding: 16px 18px 18px;
+  border-top: 1px solid var(--line);
+}
+
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-soft);
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-bottom: 9px;
+}
+
+.title {
+  font-family: var(--ff-h);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+
+.desc {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: 11px;
+}
+
+.link {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+}
+
+.card:hover .link {
+  gap: 8px;
+}

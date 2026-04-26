@@ -1,0 +1,137 @@
+.sec {
+  padding: 96px 0;
+  background: var(--ink);
+  overflow: hidden;
+  position: relative;
+}
+
+.sec::before {
+  content: '"';
+  position: absolute;
+  font-family: var(--ff-h);
+  font-size: 640px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.025);
+  line-height: 0.8;
+  top: -32px;
+  left: 48px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wrap {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0 96px;
+  position: relative;
+}
+
+.hd { margin-bottom: 64px; }
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-family: var(--ff-h);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.h2 em { font-style: italic; color: #7BA3FF; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.quote {
+  font-family: var(--ff-h);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.65;
+  margin-bottom: 28px;
+  position: relative;
+  padding-inline-start: 20px;
+}
+
+.quote::before {
+  content: '"';
+  font-size: 48px;
+  color: rgba(123, 163, 255, 0.4);
+  line-height: 0;
+  position: absolute;
+  top: 16px;
+  inset-inline-start: -8px;
+  font-style: normal;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 22px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.init {
+  font-family: var(--ff-h);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.role {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.stars {
+  margin-inline-start: auto;
+  color: #7BA3FF;
+  font-size: 12px;
+  letter-spacing: 2px;
+}

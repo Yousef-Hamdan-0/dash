@@ -1,0 +1,57 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-b);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 13px 28px;
+  margin-right: 8px;
+
+  border-radius: 9px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+}
+
+.primary {
+  background: var(--blue);
+  color: #fff;
+}
+
+.primary:hover {
+  background: var(--blue-mid);
+  box-shadow: 0 4px 18px rgba(13,60,194,.32);
+}
+
+.secondary {
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--s1);
+}
+
+.secondary:hover {
+  box-shadow: var(--s2);
+  border-color: #c0c0d8;
+}
+
+.ghost {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+.ghost:hover {
+  background: rgba(255,255,255,.18);
+}
+
+.white {
+  background: #fff;
+  color: var(--ink);
+}
+
+.white:hover {
+  box-shadow: var(--s2);
+}

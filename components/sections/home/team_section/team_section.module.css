@@ -1,0 +1,115 @@
+.sec {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 96px;
+}
+
+.wrap {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0 96px;
+}
+
+.hd {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.h2 {
+  font-family: var(--ff-h);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.h2 em {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.sub {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ink2);
+  max-width: 480px;
+  margin: 12px auto 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.avatar {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--blue-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.member:hover .avatar {
+  box-shadow: var(--s2);
+  transform: translateY(-3px);
+}
+
+.initials {
+  font-family: var(--ff-h);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.badge {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--blue);
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+
+.name {
+  font-family: var(--ff-h);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.role {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: -6px;
+}

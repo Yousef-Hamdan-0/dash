@@ -1,0 +1,128 @@
+.wrap {
+  background: var(--white);
+}
+
+.inner {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 130px 96px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* LEFT */
+.h1 {
+  font-family: var(--ff-h);
+  font-size: clamp(40px, 4.8vw, 64px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.5px;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.h1Italic {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.sub {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 420px;
+  margin-bottom: 36px;
+}
+
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* RIGHT */
+.right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bgShape {
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  background: var(--blue-soft);
+  border-radius: 24px;
+  top: 4%;
+  right: 0;
+  z-index: 0;
+}
+
+.img {
+  position: relative;
+  z-index: 1;
+  width: 82%;
+  aspect-ratio: 4 / 4.2;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--line);
+  box-shadow: var(--s2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-end: 6%;
+}
+
+.imgPlaceholder {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(13,60,194,.25);
+}
+
+
+.badge {
+  position: absolute;
+  bottom: 24px;
+  left: -28px;
+  z-index: 2;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: var(--s2);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.badgeIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--blue-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  flex-shrink: 0;
+}
+
+.badgeTitle {
+  font-family: var(--ff-h);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.badgeSub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}

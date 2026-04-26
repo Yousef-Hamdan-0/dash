@@ -1,0 +1,113 @@
+.sec {
+  padding: 100px 0;
+  background: var(--blue);
+  position: relative;
+  overflow: hidden;
+}
+
+.sec::before {
+  content: 'START';
+  position: absolute;
+  font-family: var(--ff-h);
+  font-size: min(32vw, 480px);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.inner {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+  position: relative;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  display: block;
+  margin-bottom: 18px;
+}
+
+.h2 {
+  font-family: var(--ff-h);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.h2 em { font-style: italic; color: rgba(255, 255, 255, 0.52); }
+
+.sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 420px;
+  line-height: 1.75;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.btnW {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--blue);
+  font-family: var(--ff-b);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 32px;
+  border-radius: 9px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.btnW:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+.btnG {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: var(--ff-b);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 14px 32px;
+  border-radius: 9px;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: all 0.2s;
+}
+
+.btnG:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}

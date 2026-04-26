@@ -1,0 +1,140 @@
+.sec {
+  background: var(--white);
+  padding: 148px 0 96px;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+
+.inner {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0 96px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 96px;
+  align-items: center;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.h1 {
+  font-family: var(--ff-h);
+  font-size: clamp(48px, 5.5vw, 72px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+
+.h1 em { font-style: italic; color: var(--blue); }
+
+.sub {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.yrs {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.yrNum {
+  font-family: var(--ff-h);
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--blue);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.yrLbl {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 120px;
+}
+
+.yrDiv {
+  width: 1px;
+  height: 48px;
+  background: var(--line);
+}
+
+/* Pills */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hexItem {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+
+.hexItem:hover {
+  box-shadow: var(--s2);
+  transform: translateX(6px);
+  border-color: rgba(13, 60, 194, 0.18);
+}
+
+.hexIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--blue-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.hexBody { flex: 1; }
+
+.hexTitle {
+  font-family: var(--ff-h);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.hexSub {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hexTag {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--blue);
+  background: var(--blue-soft);
+  padding: 3px 10px;
+  border-radius: 100px;
+  flex-shrink: 0;
+}

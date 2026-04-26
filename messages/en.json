@@ -1,0 +1,342 @@
+{
+    "nav": {
+        "home": "Home",
+        "services": "Services",
+        "work": "Work",
+        "experience": "Experience",
+        "team": "Team",
+        "cta": "Let's Talk"
+    },
+    "home_hero": {
+        "label": "My name is",
+        "title": "DASH",
+        "subtitle": "Studio.",
+        "body": "Creative team with more than 5 years of combined experience across branding, web development, motion design, management systems, and game development.",
+        "btnPrimary": "Start a Project",
+        "btnSecondary": "See Our Work"
+    },
+    "numbers": {
+        "specialists": "Specialists on the team",
+        "disciplines": "Disciplines mastered",
+        "ownership": "Ownership of every project",
+        "ambition": "No limits on ambition"
+    },
+    "servicesSection": {
+        "label": "What We Do",
+        "title": "Five disciplines. <em>One studio.</em>",
+        "items": [
+            "Branding & Visual Identity",
+            "Web Design & Development",
+            "Motion & Video Production",
+            "Management Systems",
+            "Game Development"
+        ]
+    },
+    "work": {
+        "label": "Our Work",
+        "title": "What we make, <em>speaks for itself.</em>",
+        "viewAll": "View All Work →",
+        "viewProject": "View Project",
+        "tags": {
+            "branding": "Branding",
+            "web": "Web Design",
+            "motion": "Motion",
+            "systems": "Systems",
+            "games": "Game Dev"
+        },
+        "cards": [
+            {
+                "title": "Brand Identity Project",
+                "desc": "Full visual identity — logo, guidelines, and brand world."
+            },
+            {
+                "title": "Website & Web App",
+                "desc": "Clean, functional design built for real users and real goals."
+            },
+            {
+                "title": "Motion & Video",
+                "desc": "Storytelling in motion — from concept to final cut."
+            },
+            {
+                "title": "Clinic Management System",
+                "desc": "Custom digital solution that simplified daily clinic operations."
+            },
+            {
+                "title": "Interactive Experience",
+                "desc": "An immersive game built with creativity and technical precision."
+            },
+            {
+                "title": "Startup Identity",
+                "desc": "From zero to a full brand — helping a startup find its voice."
+            }
+        ]
+    },
+    "experience": {
+        "label": "Experience",
+        "title": "We're new. But we're <em>not guessing.</em>",
+        "body": "DASH may be just getting started, but our team brings years of hands-on experience. We've designed brands, shipped products, built systems for healthcare providers, and developed games.",
+        "cta": "Work With Us",
+        "cards": [
+            {
+                "title": "Clinics & Healthcare",
+                "body": "Systems that streamline operations and make running a clinic effortless."
+            },
+            {
+                "title": "Startups Finding Their Voice",
+                "body": "From zero to brand identity — we help early-stage teams look like they mean business."
+            },
+            {
+                "title": "Brands Ready for a Refresh",
+                "body": "We rethink, rebuild, and relaunch brands that deserve to be seen."
+            },
+            {
+                "title": "Creators & World-Builders",
+                "body": "Games, interactive experiences, and immersive worlds — built with creativity and precision."
+            }
+        ]
+    },
+    "team": {
+        "label": "Our Team",
+        "title": "6 minds. <em>One direction.</em>",
+        "body": "Designers, developers, storytellers, and builders. No egos. No filler. Just people who care deeply about the details."
+    },
+    "contact": {
+        "label": "Contact",
+        "title": "Let's build something <em>worth remembering.</em>",
+        "body": "Have a project in mind? A system to build? A game to create? Or just want to see if we're the right fit — we'd love to hear from you.",
+        "form": {
+            "name": "Your Name",
+            "namePh": "John Smith",
+            "email": "Email Address",
+            "emailPh": "john@company.com",
+            "project": "What are you looking to build?",
+            "projectPh": "A brand, a website, a system...",
+            "message": "Tell us more",
+            "messagePh": "Give us a brief idea of your project, timeline, and goals...",
+            "submit": "Send Message",
+            "successMsg": "Message sent! We'll be in touch soon.",
+            "errorMsg": "Something went wrong. Please try again."
+        }
+    },
+    "services": {
+  "hero": {
+    "label":     "Our Services",
+    "title":     "Five disciplines.<br/><em>One studio.</em>",
+    "body":      "Every service we offer is a craft we've mastered. No subcontractors, no guesswork — just precision and purpose from start to finish.",
+    "pills": {
+      "branding": "Branding",
+      "web":      "Web Design",
+      "motion":   "Motion",
+      "systems":  "Systems",
+      "games":    "Games"
+    },
+    "cardTitle": "Services",
+    "cardSub":   "that move businesses forward",
+    "cardBtn":   "Explore Services"
+  },
+  "items": {
+    "branding": {
+      "shortTitle": "Branding",
+      "title":      "Branding &\nVisual Identity",
+      "tagline":    "Your brand is your first impression — make it count.",
+      "body":       "We build complete brand identities from the ground up. Every color, typeface, and mark is crafted with intent — so your brand speaks before you say a word.",
+      "features": { "0": "Logo Design & Wordmark", "1": "Color System", "2": "Typography Scale", "3": "Brand Guidelines", "4": "Collateral Design", "5": "Social Media Identity" },
+      "cta":        "Start a Branding Project",
+      "visLabel":   "Branding & Identity",
+      "visSub":     "Every mark. Every color. Every word."
+    },
+    "web": {
+      "shortTitle": "Web Design",
+      "title":      "Web Design &\nDevelopment",
+      "tagline":    "Beautiful by design. Fast by default.",
+      "body":       "We design and build websites that earn trust. Every interface guides users naturally — clean code, responsive layouts, and zero compromise on performance.",
+      "features": { "0": "UI/UX Design", "1": "Frontend Development", "2": "Backend & CMS", "3": "SEO & Performance", "4": "Responsive Design", "5": "Maintenance & Support" },
+      "cta":        "Start a Web Project",
+      "visLabel":   "Web Design & Dev",
+      "visSub":     "Pixels with purpose. Code with care."
+    },
+    "motion": {
+      "shortTitle": "Motion",
+      "title":      "Motion &\nVideo Production",
+      "tagline":    "Storytelling that moves. Literally.",
+      "body":       "Attention is the rarest resource. We craft motion content that earns it — brand films, reels, UI animations, and explainers that people actually finish watching.",
+      "features": { "0": "Brand Films", "1": "Social Media Reels", "2": "Motion Graphics", "3": "UI Animations", "4": "Product Demos", "5": "Explainer Videos" },
+      "cta":        "Start a Motion Project",
+      "visLabel":   "Motion & Video",
+      "visSub":     "Frame by frame. Story by story."
+    },
+    "systems": {
+      "shortTitle": "Systems",
+      "title":      "Management\nSystems",
+      "tagline":    "Built around how your team actually works.",
+      "body":       "Generic software slows you down. We build custom dashboards and internal tools that fit your exact workflow — so your team moves faster with less friction.",
+      "features": { "0": "Custom Dashboards", "1": "CRM Systems", "2": "Inventory & Ops Tools", "3": "Data Visualization", "4": "API Integrations", "5": "Workflow Automation" },
+      "cta":        "Build a System",
+      "visLabel":   "Management Systems",
+      "visSub":     "Your workflow. Our precision."
+    },
+    "games": {
+      "shortTitle": "Game Dev",
+      "title":      "Game\nDevelopment",
+      "tagline":    "Worlds built with creativity and precision.",
+      "body":       "From concept to launch, we handle every layer. Mechanics that hook, visuals that impress, and experiences that stay with the player long after they close the screen.",
+      "features": { "0": "2D & 3D Games", "1": "Game UI & UX", "2": "Level Design", "3": "Unity / Unreal Engine", "4": "Interactive Web Experiences", "5": "Narrative & World Design" },
+      "cta":        "Build a Game",
+      "visLabel":   "Game Development",
+      "visSub":     "Build worlds. Shape experiences."
+    }
+  },
+  "process": {
+    "label": "How We Work",
+    "title": "Three steps. <em>Zero guesswork.</em>",
+    "steps": [
+      { "num": "01 — Discover", "title": "We start by listening.",           "body": "Every project begins with understanding. We dig into your goals, audience, and context before drawing a single shape or writing a single line of code." },
+      { "num": "02 — Design",   "title": "We iterate until it's inevitable.", "body": "We sketch, prototype, and refine until the solution feels right. No arbitrary choices — every decision is intentional, backed by craft and clear thinking." },
+      { "num": "03 — Deliver",  "title": "We ship. You grow.",                "body": "Clean handoffs, polished assets, and support that doesn't end at launch. We stay involved until you're confident — and beyond, if you need us." }
+    ]
+  },
+  "cta": {
+    "label":        "Ready to start?",
+    "title":        "Let's build something<br/><em>worth remembering.</em>",
+    "body":         "Have a project in mind? Tell us about it. We respond within 24 hours — no templates, no runaround.",
+    "btnPrimary":   "Start a Project",
+    "btnSecondary": "See Our Work"
+  }
+},
+"work_page": {
+  "hero": {
+    "label": "Our Work",
+    "title": "We let the work<br/><em>do the talking.</em>",
+    "body":  "From brand identities to full-scale systems — every project here represents a problem solved, a story told, and a standard held.",
+    "filters": {
+      "all":      "All Work",
+      "branding": "Branding",
+      "web":      "Web Design",
+      "motion":   "Motion",
+      "systems":  "Systems",
+      "games":    "Games"
+    },
+    "stats": {
+      "projects":    "Projects completed",
+      "disciplines": "Disciplines",
+      "tagVal":      "100% Ownership",
+      "tagLbl":      "Every project, fully owned and delivered."
+    }
+  },
+  "featured": {
+    "label":        "Featured Project",
+    "title":        "The work we're <em>most proud of.</em>",
+    "tag":          "Branding",
+    "projectTitle": "Full Brand Identity — Studio Project",
+    "desc":         "A complete visual identity built from scratch. Logo system, color language, typography, brand guidelines, and launch-ready collateral.",
+    "btn":          "View Case Study",
+    "meta": {
+      "client":    "Client",
+      "clientVal": "DASH Studio",
+      "year":      "Year",
+      "scope":     "Scope",
+      "scopeVal":  "Brand Identity"
+    }
+  },
+  "grid": {
+    "label": "All Projects",
+    "title": "Every project. <em>Every discipline.</em>",
+    "viewProject": "View Project",
+    "projects": {
+      "p1":  { "title": "Brand Identity",         "desc": "Full visual identity — logo, guidelines, and brand world.",           "category": "Branding" },
+      "p2":  { "title": "Web Application",         "desc": "Clean, functional design built for real users and real goals.",        "category": "Web Design" },
+      "p3":  { "title": "Motion Campaign",         "desc": "Storytelling in motion — from concept to final cut.",                 "category": "Motion" },
+      "p4":  { "title": "Clinic System",           "desc": "Custom digital solution that simplified daily clinic operations.",     "category": "Systems" },
+      "p5":  { "title": "Interactive Game",        "desc": "An immersive experience built with creativity and technical precision.","category": "Games" },
+      "p6":  { "title": "Startup Identity",        "desc": "From zero to a full brand — helping a startup find its voice.",        "category": "Branding" },
+      "p7":  { "title": "E-Commerce Platform",     "desc": "A fully custom storefront built for performance and conversion.",      "category": "Web Design" },
+      "p8":  { "title": "Brand Film",              "desc": "A cinematic brand story told in under two minutes.",                   "category": "Motion" },
+      "p9":  { "title": "Operations Dashboard",    "desc": "Real-time ops visibility for a growing business.",                    "category": "Systems" },
+      "p10": { "title": "Mobile Game",             "desc": "2D mobile experience with tight mechanics and sharp visuals.",         "category": "Games" },
+      "p11": { "title": "Brand Refresh",           "desc": "Rethinking and rebuilding a brand that deserved to be seen.",          "category": "Branding" },
+      "p12": { "title": "Portfolio Website",       "desc": "A designer's portfolio — minimal, fast, and memorable.",              "category": "Web Design" }
+    }
+  },
+  "cta": {
+    "label":        "Ready to start?",
+    "title":        "Let's build something<br/><em>worth remembering.</em>",
+    "body":         "Have a project in mind? Tell us about it. We respond within 24 hours.",
+    "btnPrimary":   "Start a Project",
+    "btnSecondary": "Our Services"
+  }
+},
+"exp": {
+  "hero": {
+    "label": "Experience",
+    "title": "New studio.<br/><em>Seasoned hands.</em>",
+    "body":  "DASH may be young — but our team brings years of real, hands-on experience across industries that demand precision, creativity, and results.",
+    "yrs1":  "Years combined experience",
+    "yrs2":  "Projects delivered",
+    "items": [
+      { "title": "Clinics & Healthcare",         "sub": "Systems that simplify operations",     "tag": "Systems" },
+      { "title": "Startups & New Ventures",      "sub": "Brands built from the ground up",      "tag": "Branding" },
+      { "title": "Brands Ready to Grow",         "sub": "Identities rebuilt and relaunched",    "tag": "Identity" },
+      { "title": "Creators & World-Builders",    "sub": "Games and interactive experiences",    "tag": "Games" }
+    ]
+  },
+  "numbers": {
+    "items": [
+      "Years combined experience",
+      "Projects delivered",
+      "Client satisfaction",
+      "Disciplines mastered"
+    ]
+  },
+  "industries": {
+    "label":    "Industries",
+    "title":    "Where we've <em>made our mark.</em>",
+    "viewWork": "View Related Work",
+    "cards": {
+      "health":  { "num": "01 — Healthcare", "title": "Clinics &\nHealthcare",       "desc": "We've built management systems for clinics that handle scheduling, patient records, and daily operations.", "tags": { "0": "Systems", "1": "UI/UX", "2": "Automation" } },
+      "startup": { "num": "02 — Startups",   "title": "Startups &\nNew Ventures",    "desc": "We help early-stage teams build identities that look like they mean business from day one.",               "tags": { "0": "Branding", "1": "Web", "2": "Strategy" } },
+      "brand":   { "num": "03 — Branding",   "title": "Brands Ready\nto Grow",       "desc": "Established brands that need a rethink. We rebuild from the inside out — sharper, clearer, more memorable.", "tags": { "0": "Identity", "1": "Guidelines", "2": "Collateral" } },
+      "creator": { "num": "04 — Creative",   "title": "Creators &\nWorld-Builders",  "desc": "Interactive games, immersive worlds, and motion content built with creativity and technical precision.",      "tags": { "0": "Games", "1": "Motion", "2": "Interactive" } }
+    }
+  },
+  "timeline": {
+    "label": "Our Journey",
+    "title": "Where we've been. <em>Where we're going.</em>",
+    "items": [
+      { "title": "The Beginning",          "body": "First freelance projects — logo design, small websites, and learning everything the hard way.", "chips": { "0": "Logo Design", "1": "Freelance", "2": "Learning" } },
+      { "title": "First Real Clients",     "body": "Landed first recurring clients. Started to understand what clients actually need versus what they ask for.", "chips": { "0": "Branding", "1": "Web", "2": "Client Work" } },
+      { "title": "Systems Work Begins",    "body": "Built first clinic management system. Discovered the power of solving operational problems through software.", "chips": { "0": "Systems", "1": "Healthcare", "2": "Custom Dev" } },
+      { "title": "Motion & Game Dev",      "body": "Expanded into motion design and game development. The team grew — each person bringing a new discipline.", "chips": { "0": "Motion", "1": "Games", "2": "Team Growth" } },
+      { "title": "DASH Studio Forms",      "body": "Decided to stop freelancing solo and build something real. DASH Studio was born from a simple belief: quality over volume.", "chips": { "0": "Studio", "1": "Team", "2": "Direction" } },
+      { "title": "Now — Building Forward", "body": "12+ projects in. 5 disciplines. One studio. We're just getting started.", "chips": { "0": "2025", "1": "Growing", "2": "Shipping" } }
+    ]
+  },
+  "skills": {
+    "label": "Disciplines",
+    "title": "Five crafts. <em>One team.</em>",
+    "body":  "Each person on our team owns their discipline completely — no generalists, no shortcuts.",
+    "items": [
+      { "name": "Brand Design",    "desc": "Identity, systems, and visual language" },
+      { "name": "Web Dev",         "desc": "Frontend, backend, and everything between" },
+      { "name": "Motion & Video",  "desc": "Films, reels, and animated interfaces" },
+      { "name": "Systems",         "desc": "Dashboards, CRM, and operations tools" },
+      { "name": "Game Dev",        "desc": "2D, 3D, and interactive experiences" }
+    ]
+  },
+  "testimonials": {
+    "label": "What Clients Say",
+    "title": "Words from the people <em>we've worked with.</em>",
+    "items": [
+      { "quote": "DASH didn't just design our clinic system — they thought through every workflow we had. The result actually changed how we operate day to day.", "name": "Ahmad K.", "role": "Clinic Director" },
+      { "quote": "We came to them with a vague idea and left with a brand identity that felt exactly like us. Fast, sharp, and professional from day one.", "name": "Sara M.", "role": "Startup Founder" },
+      { "quote": "The motion content they made for our launch campaign stopped people mid-scroll. We saw engagement go up immediately after the videos dropped.", "name": "Rami H.", "role": "Marketing Lead" }
+    ]
+  },
+  "cta": {
+    "label":        "Work with us",
+    "title":        "Experience you can <em>see in the work.</em>",
+    "body":         "Every project we take on gets our full attention. Not a template. Not a shortcut. Real craft, real results.",
+    "btnPrimary":   "Start a Project",
+    "btnSecondary": "See Our Work"
+  }
+}
+}
