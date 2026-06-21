@@ -30,13 +30,20 @@ export async function createTeamMember(_prev: unknown, formData: FormData) {
   const uploadError = getUploadFieldError(formData, 'image_url', 'Photo')
   if (uploadError) return { error: uploadError }
 
+  const name = String(formData.get('name') ?? '').trim()
+  const role = String(formData.get('role') ?? '').trim()
+  const badge = String(formData.get('badge') ?? '').trim()
+  if (!name || !role || !badge) return { error: 'English name, role, and badge are required.' }
+
   const initials = await generateNextInitials(supabase)
 
   const { error } = await supabase.from('team_members').insert({
     initials,
-    name:       String(formData.get('name')),
-    role:       String(formData.get('role')),
-    badge:      String(formData.get('badge')),
+    name,
+    name_ar:    String(formData.get('name_ar') ?? '').trim() || null,
+    role,
+    role_ar:    String(formData.get('role_ar') ?? '').trim() || null,
+    badge,
     image_url:  String(formData.get('image_url') ?? '') || null,
     sort_order: Number(formData.get('sort_order') ?? 0),
     active:     formData.get('active') === 'true',
@@ -57,11 +64,18 @@ export async function updateTeamMember(id: string, _prev: unknown, formData: For
   const uploadError = getUploadFieldError(formData, 'image_url', 'Photo')
   if (uploadError) return { error: uploadError }
 
+  const name = String(formData.get('name') ?? '').trim()
+  const role = String(formData.get('role') ?? '').trim()
+  const badge = String(formData.get('badge') ?? '').trim()
+  if (!name || !role || !badge) return { error: 'English name, role, and badge are required.' }
+
   const { error } = await supabase.from('team_members').update({
     initials:   String(formData.get('initials')),
-    name:       String(formData.get('name')),
-    role:       String(formData.get('role')),
-    badge:      String(formData.get('badge')),
+    name,
+    name_ar:    String(formData.get('name_ar') ?? '').trim() || null,
+    role,
+    role_ar:    String(formData.get('role_ar') ?? '').trim() || null,
+    badge,
     image_url:  String(formData.get('image_url') ?? '') || null,
     sort_order: Number(formData.get('sort_order') ?? 0),
     active:     formData.get('active') === 'true',

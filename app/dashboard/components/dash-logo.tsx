@@ -19,7 +19,7 @@ export default function DashLogo({
       width={72}
       height={22}
       priority
-      style={{ objectFit: 'contain', objectPosition: 'left center' }}
+      style={{ width: '72px', height: 'auto', objectFit: 'contain', objectPosition: 'left center' }}
     />
   )
 

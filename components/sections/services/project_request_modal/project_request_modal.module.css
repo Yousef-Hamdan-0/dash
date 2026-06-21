@@ -233,18 +233,19 @@
 }
 
 .contactList {
-  display: grid;
-  gap: 9px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .contactList a {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-  padding: 12px 13px;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 46px;
   border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 8px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
   text-decoration: none;
@@ -258,19 +259,24 @@
   transform: translateY(-1px);
 }
 
-.contactList span {
-  color: rgba(255, 255, 255, 0.44);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+.contactList svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
 }
 
-.contactList strong {
-  overflow-wrap: anywhere;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.45;
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 @media (max-width: 760px) {

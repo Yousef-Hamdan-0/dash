@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { createClientManual } from '@/app/dashboard/actions/clients'
 
-export default function AddClientModal() {
+export default function AddClientModal({ quickAction = false }: { quickAction?: boolean }) {
   const [open, setOpen] = useState(false)
   const [state, action, pending] = useActionState(createClientManual, undefined)
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -28,11 +28,24 @@ export default function AddClientModal() {
     <>
       <button
         type="button"
-        className="dash-button dash-button--primary"
+        className={quickAction ? 'dash-quick-link dash-quick-link--primary' : 'dash-button dash-button--primary'}
         onClick={() => setOpen(true)}
       >
-        <span aria-hidden="true">+</span>
-        Add Client
+        {quickAction ? (
+          <>
+            <span className="dash-quick-icon" aria-hidden="true">+</span>
+            <span className="dash-quick-copy">
+              <strong>Add client</strong>
+              <small>Create a client record manually</small>
+            </span>
+            <span className="dash-quick-arrow" aria-hidden="true">→</span>
+          </>
+        ) : (
+          <>
+            <span aria-hidden="true">+</span>
+            Add Client
+          </>
+        )}
       </button>
 
       <dialog

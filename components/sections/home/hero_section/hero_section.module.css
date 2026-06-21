@@ -103,9 +103,8 @@
 .carouselSlide {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  display: block;
+  overflow: hidden;
   border: 1px solid rgba(13, 60, 194, .08);
   border-radius: 20px;
   background:
@@ -153,56 +152,37 @@
 }
 
 .carouselFallback {
-  width: min(64%, 250px);
-  aspect-ratio: 1 / 1.2;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 8px;
-  border: 1px solid rgba(13, 60, 194, .12);
-  border-radius: 18px 18px 0 0;
+  padding-bottom: 74px;
+  border: 0;
+  border-radius: inherit;
   background:
     linear-gradient(180deg, rgba(255,255,255,.92), rgba(235,240,252,.78));
   color: var(--blue);
-  box-shadow: 0 18px 34px rgba(17, 17, 24, .10);
 }
 
 .carouselPortrait {
-  position: relative;
-  width: min(78%, 320px);
-  aspect-ratio: 1 / 1.2;
-  margin-bottom: 8px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  border: 1px solid rgba(13, 60, 194, .12);
-  border-radius: 18px 18px 0 0;
+  border: 0;
+  border-radius: inherit;
   background: var(--line);
-  box-shadow: 0 18px 34px rgba(17, 17, 24, .10);
 }
 
 .carouselPortraitImage {
   object-fit: cover;
-  object-position: top;
-}
-
-.carouselPortraitBadge {
-  position: absolute;
-  inset-inline-start: 12px;
-  bottom: 12px;
-  z-index: 1;
-  min-height: 24px;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 8px;
-  padding: 5px 9px;
-  background: rgba(255, 255, 255, .9);
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
+  object-position: center;
 }
 
 .carouselInitials {
@@ -227,7 +207,9 @@
 }
 
 .carouselInfo {
-  position: relative;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
   z-index: 4;
   min-height: 74px;
   display: flex;
@@ -239,6 +221,27 @@
   background: rgba(255, 255, 255, .78);
   backdrop-filter: blur(8px);
   text-align: center;
+}
+
+.carouselInfoOnImage {
+  min-height: 104px;
+  align-items: flex-end;
+  padding: 34px 20px 18px;
+  border-top: 0;
+  background: linear-gradient(180deg, transparent, rgba(5, 9, 24, .82));
+  backdrop-filter: none;
+}
+
+.carouselInfoOnImage .carouselName {
+  color: #fff;
+}
+
+.carouselInfoOnImage .carouselRole {
+  color: rgba(255, 255, 255, .72);
+}
+
+.carouselInfoOnImage .carouselCta {
+  color: #fff;
 }
 
 .carouselCopy {
@@ -371,7 +374,8 @@
 
 .badge {
   position: absolute;
-  bottom: 24px;
+  top: 18px;
+  bottom: auto;
   left: -28px;
   z-index: 2;
   background: var(--white);
@@ -424,6 +428,7 @@
   .badge {
     inset-inline-start: -12px;
     left: auto;
+    top: 10px;
   }
 }
 
@@ -465,14 +470,12 @@
 
   .badge {
     inset-inline-start: 8px;
-    bottom: -18px;
+    top: -18px;
+    bottom: auto;
     min-width: 164px;
     padding: 11px 13px;
   }
 
-  .carouselPortrait {
-    width: min(76%, 280px);
-  }
 }
 
 @media (max-width: 480px) {
@@ -486,5 +489,9 @@
 
   .carouselInfo {
     min-height: 68px;
+  }
+
+  .carouselInfoOnImage {
+    min-height: 96px;
   }
 }

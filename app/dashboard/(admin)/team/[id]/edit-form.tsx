@@ -36,12 +36,16 @@ export default function EditTeamMemberForm({ member }: { member: DbTeamMember })
         <div className="dash-form-card">
           <h2 className="dash-form-card__title">Details</h2>
           <div className="dash-form-grid">
-            <FormField label="Full Name" name="name" value={member.name} required />
+            <FormField label="Full Name (English)" name="name" value={member.name} required />
             <FormField label="Initials" name="initials" value={member.initials} required hint="Shown as avatar fallback." />
           </div>
           <div className="dash-form-grid">
-            <FormField label="Role" name="role" value={member.role} required />
+            <FormField label="Role (English)" name="role" value={member.role} required />
             <FormField label="Badge" name="badge" value={member.badge} required hint="Short label shown on card." />
+          </div>
+          <div className="dash-form-grid">
+            <FormField label="Full Name (Arabic)" name="name_ar" value={member.name_ar ?? ''} dir="rtl" />
+            <FormField label="Role (Arabic)" name="role_ar" value={member.role_ar ?? ''} dir="rtl" />
           </div>
           <FormField label="Sort Order" name="sort_order" type="number" value={String(member.sort_order)} />
           <CheckboxField label="Active (shown on site)" name="active" checked={member.active} />

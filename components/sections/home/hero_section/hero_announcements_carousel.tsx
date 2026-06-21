@@ -141,9 +141,6 @@ export default function HeroAnnouncementsCarousel({
                   sizes="(max-width: 900px) 70vw, 320px"
                   className={styles.carouselPortraitImage}
                 />
-                {item.button_text && item.button_url && (
-                  <span className={styles.carouselPortraitBadge}>{item.button_text}</span>
-                )}
               </div>
             ) : (
               <div className={styles.carouselFallback}>
@@ -180,7 +177,7 @@ export default function HeroAnnouncementsCarousel({
         </>
       )}
 
-      <div className={styles.carouselInfo}>
+      <div className={`${styles.carouselInfo} ${activeSlide.image_url ? styles.carouselInfoOnImage : ''}`}>
         <div className={styles.carouselCopy}>
           <span className={styles.carouselName}>{activeSlide.title}</span>
           {activeSlide.description && (

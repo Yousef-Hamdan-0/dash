@@ -27,7 +27,9 @@ export interface DbTeamMember {
   id:         string
   initials:   string
   name:       string
+  name_ar:    string | null
   role:       string
+  role_ar:    string | null
   badge:      string
   image_url:  string | null
   sort_order: number
@@ -148,7 +150,9 @@ const fallbackTeamMembers: DbTeamMember[] = fallbackTeam.map((member, index) => 
   id: member.initials.toLowerCase(),
   initials: member.initials,
   name: member.name,
+  name_ar: null,
   role: member.role,
+  role_ar: null,
   badge: member.badge,
   image_url: member.image ?? null,
   sort_order: index + 1,
@@ -277,7 +281,7 @@ async function fetchTeamMembers(): Promise<DbTeamMember[]> {
 
 export const getTeamMembers = unstable_cache(
   fetchTeamMembers,
-  ['dash-public-team-members-v2'],
+  ['dash-public-team-members-v3'],
   { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
 )
 

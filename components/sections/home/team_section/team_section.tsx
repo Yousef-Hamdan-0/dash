@@ -35,7 +35,7 @@ export default async function TeamSection() {
                 {member.image_url ? (
                   <Image
                     src={member.image_url}
-                    alt={member.name}
+                    alt={isArabic && member.name_ar ? member.name_ar : member.name}
                     fill
                     unoptimized
                     sizes="160px"
@@ -48,8 +48,8 @@ export default async function TeamSection() {
                   </>
                 )}
               </div>
-              <div className={styles.name}>{member.name}</div>
-              <div className={styles.role}>{member.role}</div>
+              <div className={styles.name}>{isArabic && member.name_ar ? member.name_ar : member.name}</div>
+              <div className={styles.role}>{isArabic && member.role_ar ? member.role_ar : member.role}</div>
             </div>
           ))}
         </div>

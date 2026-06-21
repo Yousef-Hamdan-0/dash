@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
+import ContactIcon, { type ContactIconName } from '@/components/ui/contact-icon'
 import styles from './project_request_modal.module.css'
 
 export interface ContactInfo {
@@ -74,16 +75,16 @@ export function ProjectRequestProvider({ children, contact }: ProjectRequestProv
 
   const links = useMemo(() => {
     const items = [
-      hasValue(contact.email) ? { label: t('emailContact'), value: contact.email, href: `mailto:${contact.email}` } : null,
-      hasValue(contact.phone) ? { label: t('phoneContact'), value: contact.phone, href: phoneHref(contact.phone) } : null,
-      hasValue(contact.whatsapp) ? { label: t('whatsapp'), value: t('whatsappValue'), href: contact.whatsapp } : null,
-      hasValue(contact.instagram) ? { label: t('instagram'), value: contact.instagram, href: contact.instagram } : null,
-      hasValue(contact.linkedin) ? { label: t('linkedin'), value: contact.linkedin, href: contact.linkedin } : null,
-      hasValue(contact.behance) ? { label: t('behance'), value: contact.behance, href: contact.behance } : null,
-      hasValue(contact.twitter) ? { label: t('twitter'), value: contact.twitter, href: contact.twitter } : null,
+      hasValue(contact.email) ? { platform: 'email', label: t('emailContact'), value: contact.email, href: `mailto:${contact.email}` } : null,
+      hasValue(contact.phone) ? { platform: 'phone', label: t('phoneContact'), value: contact.phone, href: phoneHref(contact.phone) } : null,
+      hasValue(contact.whatsapp) ? { platform: 'whatsapp', label: t('whatsapp'), value: t('whatsappValue'), href: contact.whatsapp } : null,
+      hasValue(contact.instagram) ? { platform: 'instagram', label: t('instagram'), value: contact.instagram, href: contact.instagram } : null,
+      hasValue(contact.linkedin) ? { platform: 'linkedin', label: t('linkedin'), value: contact.linkedin, href: contact.linkedin } : null,
+      hasValue(contact.behance) ? { platform: 'behance', label: t('behance'), value: contact.behance, href: contact.behance } : null,
+      hasValue(contact.twitter) ? { platform: 'twitter', label: t('twitter'), value: contact.twitter, href: contact.twitter } : null,
     ]
 
-    return items.filter(Boolean) as { label: string; value: string; href: string }[]
+    return items.filter(Boolean) as { platform: ContactIconName; label: string; value: string; href: string }[]
   }, [contact, t])
 
   function update(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -232,9 +233,16 @@ export function ProjectRequestProvider({ children, contact }: ProjectRequestProv
                 <p>{t('contactBody')}</p>
                 <div className={styles.contactList}>
                   {links.map((link) => (
-                    <a key={`${link.label}-${link.href}`} href={link.href} target="_blank" rel="noreferrer">
-                      <span>{link.label}</span>
-                      <strong>{link.value}</strong>
+                    <a
+                      key={`${link.label}-${link.href}`}
+                      href={link.href}
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      aria-label={`${link.label}: ${link.value}`}
+                      title={link.label}
+                    >
+                      <ContactIcon name={link.platform} />
+                      <span className={styles.visuallyHidden}>{link.label}: {link.value}</span>
                     </a>
                   ))}
                 </div>

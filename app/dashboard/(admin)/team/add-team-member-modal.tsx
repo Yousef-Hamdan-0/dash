@@ -68,8 +68,13 @@ export default function AddTeamMemberModal() {
             </p>
 
             <div className="dash-form-grid">
-              <FormField label="Full Name" name="name" required placeholder="Yousef Hamdan" />
-              <FormField label="Role" name="role" required placeholder="Full-Stack Dev" />
+              <FormField label="Full Name (English)" name="name" required placeholder="Yousef Hamdan" />
+              <FormField label="Role (English)" name="role" required placeholder="Full-Stack Developer" />
+            </div>
+
+            <div className="dash-form-grid">
+              <FormField label="Full Name (Arabic)" name="name_ar" placeholder="يوسف حمدان" dir="rtl" />
+              <FormField label="Role (Arabic)" name="role_ar" placeholder="مطور برمجيات متكامل" dir="rtl" />
             </div>
 
             <div className="dash-form-grid">

@@ -90,6 +90,12 @@ CREATE TRIGGER home_announcements_updated_at
 ALTER TABLE public.site_settings
   ADD COLUMN IF NOT EXISTS team_phone TEXT;
 
+-- ─── 3b. Arabic team member content ─────────────────────────────────────────
+
+ALTER TABLE public.team_members
+  ADD COLUMN IF NOT EXISTS name_ar TEXT,
+  ADD COLUMN IF NOT EXISTS role_ar TEXT;
+
 -- ─── 4. Add seen_at to clients (for notification badge fix) ──────────────────
 
 ALTER TABLE public.clients

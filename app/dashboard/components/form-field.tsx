@@ -7,11 +7,12 @@ interface FormFieldProps {
   required?:   boolean
   hint?:       string
   rows?:       number
+  dir?:        'ltr' | 'rtl' | 'auto'
   children?:   React.ReactNode
 }
 
 export function FormField({
-  label, name, type = 'text', value, placeholder, required, hint, rows, children,
+  label, name, type = 'text', value, placeholder, required, hint, rows, dir, children,
 }: FormFieldProps) {
   return (
     <div className="dash-field">
@@ -29,6 +30,7 @@ export function FormField({
           placeholder={placeholder}
           required={required}
           rows={rows}
+          dir={dir}
           className="dash-textarea"
         />
       ) : (
@@ -39,6 +41,7 @@ export function FormField({
           defaultValue={value}
           placeholder={placeholder}
           required={required}
+          dir={dir}
           className="dash-input"
         />
       )}

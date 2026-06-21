@@ -20,11 +20,11 @@ export default async function DashboardPage() {
   ]
 
   const quickLinks = [
-    { href: '/dashboard/clients',          label: 'View Inquiries' },
-    { href: '/dashboard/projects/new',     label: 'New Project' },
-    { href: '/dashboard/team/new',         label: 'Add Team Member' },
-    { href: '/dashboard/testimonials/new', label: 'Add Testimonial' },
-    { href: '/dashboard/settings',         label: 'Site Settings' },
+    { href: '/dashboard/clients',          label: 'View inquiries',  description: 'Review and manage client requests', icon: '✉' },
+    { href: '/dashboard/projects/new',     label: 'New project',     description: 'Publish a new portfolio project', icon: '◈' },
+    { href: '/dashboard/team/new',         label: 'Add team member', description: 'Expand the studio team', icon: '◎' },
+    { href: '/dashboard/testimonials/new', label: 'Add testimonial', description: 'Share a new client quote', icon: '❝' },
+    { href: '/dashboard/settings',         label: 'Site settings',   description: 'Update contact and social links', icon: '⚙' },
   ]
 
   return (
@@ -35,7 +35,6 @@ export default async function DashboardPage() {
           <h1 className="dash-title">Studio overview</h1>
           <p className="dash-copy">Manage the content that powers the DASH Studio website.</p>
         </div>
-        <AddClientModal />
       </header>
 
       <section className="dash-stat-grid">
@@ -111,10 +110,15 @@ export default async function DashboardPage() {
           </div>
           <div className="dash-panel__body">
             <div className="dash-quick-list">
+              <AddClientModal quickAction />
               {quickLinks.map((l) => (
                 <Link key={l.href} href={l.href} className="dash-quick-link">
-                  {l.label}
-                  <span aria-hidden="true">+</span>
+                  <span className="dash-quick-icon" aria-hidden="true">{l.icon}</span>
+                  <span className="dash-quick-copy">
+                    <strong>{l.label}</strong>
+                    <small>{l.description}</small>
+                  </span>
+                  <span className="dash-quick-arrow" aria-hidden="true">→</span>
                 </Link>
               ))}
             </div>

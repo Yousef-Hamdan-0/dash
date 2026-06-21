@@ -45,13 +45,19 @@ export default async function TeamPage() {
                           <span>{m.initials}</span>
                         )}
                       </div>
-                      <span className="dash-table__title">{m.name}</span>
+                      <span>
+                        <span className="dash-table__title">{m.name}</span>
+                        {m.name_ar && <small className="dash-table__sub" lang="ar" dir="rtl">{m.name_ar}</small>}
+                      </span>
                     </div>
                   </td>
                   <td>
                     <span className="dash-chip dash-chip--muted">{m.initials}</span>
                   </td>
-                  <td>{m.role}</td>
+                  <td>
+                    <span>{m.role}</span>
+                    {m.role_ar && <small className="dash-table__sub" lang="ar" dir="rtl">{m.role_ar}</small>}
+                  </td>
                   <td>
                     <span className="dash-chip dash-chip--blue">{m.badge}</span>
                   </td>
