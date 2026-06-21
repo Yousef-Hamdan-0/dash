@@ -1,27 +1,100 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
+import { getSiteSettings } from '@/lib/supabase/queries'
+import { createPublicClient } from '@/lib/supabase/public'
+import { isSupabaseConfigured } from '@/lib/supabase/config'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resendApiKey = process.env.RESEND_API_KEY
+const resend = resendApiKey ? new Resend(resendApiKey) : null
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+function textField(value: unknown, maxLength: number) {
+  return typeof value === 'string' ? value.trim().slice(0, maxLength) : ''
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
 
 export async function POST(req: NextRequest) {
-  const { name, email, project, message } = await req.json()
+  let body: Record<string, unknown>
 
-  if (!name || !email || !project || !message) {
+  try {
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+  }
+
+  const name = textField(body.name, 120)
+  const email = textField(body.email, 254).toLowerCase()
+  const phone = textField(body.phone, 40)
+  const project = textField(body.project, 160)
+  const message = textField(body.message, 3000)
+  const source = body.source === 'services' ? 'services' : 'website'
+
+  if (!name || !email || !project || !message || !emailPattern.test(email)) {
     return NextResponse.json({ error: 'All fields required' }, { status: 400 })
   }
 
-  await resend.emails.send({
-    from:    'DASH Studio <onboarding@resend.dev>',
-    to:      process.env.CONTACT_EMAIL!,
-    subject: `New message from ${name}`,
-    html: `
-      <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Project:</strong> ${project}</p>
-      <p><strong>Message:</strong> ${message}</p>
-    `,
+  if (source === 'services' && !phone) {
+    return NextResponse.json({ error: 'Phone number is required' }, { status: 400 })
+  }
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: 'Supabase is not configured' }, { status: 503 })
+  }
+
+  const supabase = createPublicClient()
+  const { error: databaseError } = await supabase.from('clients').insert({
+    name,
+    email,
+    phone: phone || null,
+    service: project,
+    message,
+    source,
   })
+
+  if (databaseError) {
+    console.error('contact insert:', databaseError.message)
+    return NextResponse.json({ error: 'Could not save request' }, { status: 500 })
+  }
+
+  const safe = {
+    name: escapeHtml(name),
+    email: escapeHtml(email),
+    phone: escapeHtml(phone || 'Not provided'),
+    project: escapeHtml(project),
+    message: escapeHtml(message),
+  }
+  const settings = await getSiteSettings()
+  const toEmail = settings?.contact_email || process.env.CONTACT_EMAIL
+  const fromEmail = settings?.from_email || 'onboarding@resend.dev'
+
+  if (toEmail && resend) {
+    try {
+      await resend.emails.send({
+        from: `DASH Studio <${fromEmail}>`,
+        to: toEmail,
+        subject: `New ${safe.project} request from ${safe.name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${safe.name}</p>
+          <p><strong>Email:</strong> ${safe.email}</p>
+          <p><strong>Phone:</strong> ${safe.phone}</p>
+          <p><strong>Project:</strong> ${safe.project}</p>
+          <p><strong>Message:</strong> ${safe.message}</p>
+        `,
+      })
+    } catch (error) {
+      console.error('contact email:', error)
+    }
+  }
 
   return NextResponse.json({ success: true })
 }

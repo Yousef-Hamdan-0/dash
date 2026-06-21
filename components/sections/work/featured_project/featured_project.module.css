@@ -86,6 +86,10 @@
   opacity: 0.35;
 }
 
+.projectImage {
+  object-fit: cover;
+}
+
 /* Info */
 .info {
   background: var(--white);

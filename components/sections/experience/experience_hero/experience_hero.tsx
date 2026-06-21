@@ -1,4 +1,5 @@
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { getSiteStats } from '@/lib/supabase/queries'
 import styles from './experience_hero.module.css'
 
 const expItems = [
@@ -8,8 +9,11 @@ const expItems = [
   { emoji: '🎮', colorClass: 'creator'  },
 ] as const
 
-export default function ExperienceHero() {
-  const t = useTranslations('exp.hero')
+export default async function ExperienceHero() {
+  const [t, stats] = await Promise.all([
+    getTranslations('exp.hero'),
+    getSiteStats(),
+  ])
 
   return (
     <section className={styles.sec}>
@@ -22,12 +26,12 @@ export default function ExperienceHero() {
           <p className={styles.sub}>{t('body')}</p>
           <div className={styles.yrs}>
             <div>
-              <div className={styles.yrNum}>5+</div>
+              <div className={styles.yrNum}>{stats.teamMembers}</div>
               <div className={styles.yrLbl}>{t('yrs1')}</div>
             </div>
             <div className={styles.yrDiv} />
             <div>
-              <div className={styles.yrNum}>12+</div>
+              <div className={styles.yrNum}>{stats.projects}+</div>
               <div className={styles.yrLbl}>{t('yrs2')}</div>
             </div>
           </div>

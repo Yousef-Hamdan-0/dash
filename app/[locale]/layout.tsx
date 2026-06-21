@@ -1,22 +1,36 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, DM_Sans } from 'next/font/google'
+import localFont from 'next/font/local'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import Nav from '@/components/layout/nav_bar/nav'
 import Footer from '@/components/layout/footer_bar/footer'
 import '../globals.css'
 
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  style: ['normal', 'italic'],
+const playfair = localFont({
+  src: [
+    {
+      path: './fonts/playfair-normal-latin.woff2',
+      weight: '600 800',
+      style: 'normal',
+    },
+    {
+      path: './fonts/playfair-italic-latin.woff2',
+      weight: '600 800',
+      style: 'italic',
+    },
+  ],
   variable: '--font-playfair',
+  display: 'swap',
+  adjustFontFallback: 'Times New Roman',
 })
 
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
+const dmSans = localFont({
+  src: './fonts/dm-sans-latin.woff2',
+  weight: '300 500',
+  style: 'normal',
   variable: '--font-dm',
+  display: 'swap',
+  adjustFontFallback: 'Arial',
 })
 
 export const metadata: Metadata = {

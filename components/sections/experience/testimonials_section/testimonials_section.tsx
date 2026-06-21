@@ -1,14 +1,12 @@
-import { useTranslations } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
+import { getTestimonials } from '@/lib/supabase/queries'
 import styles from './testimonials_section.module.css'
 
-const testimonials = [
-  { initials: 'AK' },
-  { initials: 'SM' },
-  { initials: 'RH' },
-] as const
-
-export default function TestimonialsSection() {
-  const t = useTranslations('exp.testimonials')
+export default async function TestimonialsSection() {
+  const t            = await getTranslations('exp.testimonials')
+  const locale       = await getLocale()
+  const testimonials = await getTestimonials()
+  const isAr         = locale === 'ar'
 
   return (
     <section className={styles.sec}>
@@ -20,21 +18,32 @@ export default function TestimonialsSection() {
         </div>
 
         <div className={styles.grid}>
-          {testimonials.map((item, i) => (
-            <div key={i} className={styles.card}>
-              <p className={styles.quote}>{t(`items.${i}.quote`)}</p>
-              <div className={styles.meta}>
-                <div className={styles.avatar}>
-                  <span className={styles.init}>{item.initials}</span>
+          {testimonials.map((item) => {
+            const initials = item.author_name
+              .split(' ')
+              .map((n: string) => n[0])
+              .join('')
+              .slice(0, 2)
+              .toUpperCase()
+
+            const quote = isAr && item.quote_ar ? item.quote_ar : item.quote_en
+
+            return (
+              <div key={item.id} className={styles.card}>
+                <p className={styles.quote}>{quote}</p>
+                <div className={styles.meta}>
+                  <div className={styles.avatar}>
+                    <span className={styles.init}>{initials}</span>
+                  </div>
+                  <div>
+                    <div className={styles.name}>{item.author_name}</div>
+                    <div className={styles.role}>{item.author_role}</div>
+                  </div>
+                  <div className={styles.stars}>★★★★★</div>
                 </div>
-                <div>
-                  <div className={styles.name}>{t(`items.${i}.name`)}</div>
-                  <div className={styles.role}>{t(`items.${i}.role`)}</div>
-                </div>
-                <div className={styles.stars}>★★★★★</div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
       </div>

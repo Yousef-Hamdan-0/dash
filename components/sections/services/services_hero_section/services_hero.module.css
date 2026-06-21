@@ -72,22 +72,57 @@
 }
 
 .pill {
+  appearance: none;
   font-size: 13px;
   font-weight: 500;
+  font-family: var(--ff-b);
   color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.08);
   padding: 8px 18px;
   border-radius: 100px;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.pill:hover,
+.pill:focus-visible {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
 }
 
 /* Card */
 .card {
-  background: var(--blue-mid);
+  background: #031026;
   border-radius: 28px;
   padding: 52px 44px;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 24px 70px rgba(0, 43, 119, .28);
+}
+
+.cardImage {
+  z-index: -3;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.22, 1, .36, 1), filter .8s ease;
+}
+
+.cardShade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(2, 10, 25, .02) 24%, rgba(2, 10, 25, .22) 52%, rgba(2, 10, 25, .94) 100%),
+    linear-gradient(90deg, rgba(0, 43, 119, .28), transparent 72%);
+  pointer-events: none;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.025);
+  filter: saturate(1.08);
 }
 
 .card::before {
@@ -100,6 +135,7 @@
   line-height: 1;
   bottom: -24px;
   left: 28px;
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -139,6 +175,7 @@
 }
 
 .cardBtn {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -149,12 +186,45 @@
   font-weight: 500;
   padding: 13px 26px;
   border-radius: 9px;
+  border: 0;
   text-decoration: none;
   position: relative;
+  cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
-.cardBtn:hover {
+.cardBtn:hover,
+.cardBtn:focus-visible {
   box-shadow: 0 4px 22px rgba(0, 0, 0, 0.18);
   transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    padding: 0 32px;
+    gap: 48px;
+  }
+
+  .card {
+    padding: 34px;
+  }
+}
+
+@media (max-width: 760px) {
+  .sec { padding: 124px 0 72px; }
+
+  .inner {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 28px;
+    border-radius: 20px;
+  }
+
+  .cardNum { font-size: 52px; }
+  .cardTitle { font-size: 24px; }
+  .cardSub { margin-bottom: 24px; }
 }

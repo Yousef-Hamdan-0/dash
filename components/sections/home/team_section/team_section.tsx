@@ -1,10 +1,11 @@
-import { useTranslations } from 'next-intl'
-import { team } from '@/lib/data/team'
+import { getTranslations } from 'next-intl/server'
+import { getTeamMembers } from '@/lib/supabase/queries'
 import styles from './team_section.module.css'
 import Image from 'next/image'
 
-export default function TeamSection() {
-  const t = useTranslations('team')
+export default async function TeamSection() {
+  const t    = await getTranslations('team')
+  const team = await getTeamMembers()
 
   return (
     <section className={styles.sec} id="team">
@@ -18,13 +19,15 @@ export default function TeamSection() {
 
         <div className={styles.grid}>
           {team.map((member) => (
-            <div key={member.initials} className={styles.member}>
+            <div key={member.id} className={styles.member}>
               <div className={styles.avatar}>
-                {member.image ? (
+                {member.image_url ? (
                   <Image
-                    src={member.image}
+                    src={member.image_url}
                     alt={member.name}
                     fill
+                    unoptimized
+                    sizes="160px"
                     style={{ objectFit: 'cover', objectPosition: 'top' }}
                   />
                 ) : (
@@ -39,7 +42,7 @@ export default function TeamSection() {
             </div>
           ))}
         </div>
-        
+
       </div>
     </section>
   )

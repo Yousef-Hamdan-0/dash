@@ -1,25 +1,36 @@
 import { create } from 'zustand'
-import { workProjects } from '@/lib/data/work'
+import type { DbProject } from '@/lib/supabase/queries'
 
-type Filter = 'all' | 'branding' | 'web' | 'motion' | 'systems' | 'games'
+export type Filter = 'all' | 'branding' | 'web' | 'motion' | 'systems' | 'games'
 
 interface WorkFilterStore {
-  active: Filter
-  setFilter: (f: Filter) => void
-  count: number
-  filtered: typeof workProjects
+  projects:    DbProject[]
+  active:      Filter
+  filtered:    DbProject[]
+  count:       number
+  setProjects: (projects: DbProject[]) => void
+  setFilter:   (f: Filter) => void
 }
 
 export const useWorkFilter = create<WorkFilterStore>((set, get) => ({
+  projects: [],
   active:   'all',
-  filtered: workProjects,
-  count:    workProjects.length,
+  filtered: [],
+  count:    0,
+
+  setProjects: (projects: DbProject[]) => {
+    const { active } = get()
+    const filtered = active === 'all'
+      ? projects
+      : projects.filter(p => p.category === active)
+    set({ projects, filtered, count: filtered.length })
+  },
 
   setFilter: (f: Filter) => {
+    const { projects } = get()
     const filtered = f === 'all'
-      ? workProjects
-      : workProjects.filter(p => p.category === f)
-
+      ? projects
+      : projects.filter(p => p.category === f)
     set({ active: f, filtered, count: filtered.length })
   },
 }))

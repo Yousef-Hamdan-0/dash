@@ -6,6 +6,7 @@ export interface ServiceItem {
   vcStyle:  'light' | 'blue' | 'dark'
   visTags:  string[]
   features: string[]
+  image:    string
 }
 
 export interface TeamMember {
@@ -14,10 +15,4 @@ export interface TeamMember {
   role:     string
   badge:    string
   image?:   string   // ← optional
-}
-
-export interface WorkItem {
-  tag:   string
-  title: string
-  desc:  string
 }

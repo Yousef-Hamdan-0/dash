@@ -1,12 +1,17 @@
 import styles from './hero_section.module.css'
 import Button from '@/components/ui/buttons/button'
 import SectionLabel from '@/components/ui/sectionlabel'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { getTeamMembers } from '@/lib/supabase/queries'
+import HeroTeamCarousel from './hero_team_carousel'
 
 
 
-export default function HeroSection() {
-  const t = useTranslations('home_hero')
+export default async function HeroSection() {
+  const [t, team] = await Promise.all([
+    getTranslations('home_hero'),
+    getTeamMembers(),
+  ])
 
   return (
     <div className={styles.wrap}>
@@ -28,9 +33,8 @@ export default function HeroSection() {
 
         {/* RIGHT */}
         <div className={styles.right}>
-          <div className={styles.bgShape} />
           <div className={styles.img}>
-            <span className={styles.imgPlaceholder}>Team Photo</span>
+            <HeroTeamCarousel members={team} />
           </div>
           <div className={styles.badge}>
             <div className={styles.badgeIcon}>✦</div>

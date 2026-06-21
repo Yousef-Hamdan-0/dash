@@ -1,0 +1,21 @@
+.pageEnter {
+  animation: pageLanding .68s cubic-bezier(.22, 1, .36, 1) backwards;
+}
+
+@keyframes pageLanding {
+  from {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translate3d(0, 22px, 0) scale(.992);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageEnter { animation: none; }
+}

@@ -1,4 +1,4 @@
-.row { padding: 100px 0; background: var(--white); }
+.row { padding: 100px 0; background: var(--white); scroll-margin-top: 88px; }
 .alt  { background: var(--bg); }
 .dark { background: var(--ink); }
 
@@ -89,6 +89,7 @@
 .dark .feats li::before { background: #7BA3FF; }
 
 .btn {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -97,7 +98,9 @@
   font-weight: 500;
   padding: 13px 28px;
   border-radius: 9px;
+  border: 0;
   text-decoration: none;
+  cursor: pointer;
   transition: all 0.22s;
 }
 
@@ -122,11 +125,33 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  isolation: isolate;
 }
 
 .vcLight { background: var(--blue-soft); box-shadow: var(--s2); }
-.vcBlue  { background: var(--blue-mid);  box-shadow: 0 8px 48px rgba(26,79,224,.45); }
+.vcBlue  { background: var(--blue-mid);  box-shadow: 0 8px 48px rgba(26,79,224,.32); }
 .vcDark  { background: #0D1B4B;          box-shadow: 0 8px 48px rgba(0,0,0,.35); }
+
+.serviceImage {
+  z-index: -3;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.22, 1, .36, 1), filter .7s ease;
+}
+
+.imageShade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(5, 9, 24, .05) 12%, rgba(5, 9, 24, .18) 46%, rgba(5, 9, 24, .9) 100%),
+    linear-gradient(90deg, rgba(5, 9, 24, .34), transparent 68%);
+  pointer-events: none;
+}
+
+.visCard:hover .serviceImage {
+  transform: scale(1.035);
+  filter: saturate(1.06);
+}
 
 .bgNum {
   position: absolute;
@@ -140,8 +165,9 @@
   user-select: none;
   letter-spacing: -0.02em;
 }
-.vcLight .bgNum { color: rgba(13,60,194,.07); }
-.vcBlue .bgNum, .vcDark .bgNum { color: rgba(255,255,255,.07); }
+.vcLight .bgNum,
+.vcBlue .bgNum,
+.vcDark .bgNum { color: rgba(255,255,255,.1); }
 
 .circle1 {
   position: absolute;
@@ -150,8 +176,9 @@
   top: -80px; right: -80px;
   pointer-events: none;
 }
-.vcLight .circle1 { background: rgba(13,60,194,.06); }
-.vcBlue .circle1, .vcDark .circle1 { background: rgba(255,255,255,.06); }
+.vcLight .circle1,
+.vcBlue .circle1,
+.vcDark .circle1 { background: rgba(255,255,255,.08); }
 
 .circle2 {
   position: absolute;
@@ -160,8 +187,9 @@
   bottom: 100px; left: -32px;
   pointer-events: none;
 }
-.vcLight .circle2 { background: rgba(13,60,194,.04); }
-.vcBlue .circle2, .vcDark .circle2 { background: rgba(255,255,255,.04); }
+.vcLight .circle2,
+.vcBlue .circle2,
+.vcDark .circle2 { background: rgba(255,255,255,.06); }
 
 .icon {
   margin-bottom: 18px;
@@ -169,8 +197,9 @@
   display: flex;
 }
 .icon svg { width: 48px; height: 48px; }
-.vcLight .icon svg { stroke: var(--blue); fill: none; }
-.vcBlue .icon svg, .vcDark .icon svg { stroke: #fff; fill: none; }
+.vcLight .icon svg,
+.vcBlue .icon svg,
+.vcDark .icon svg { stroke: #fff; fill: none; }
 
 .visLabel {
   font-family: var(--ff-h);
@@ -179,8 +208,9 @@
   margin-bottom: 6px;
   position: relative;
 }
-.vcLight .visLabel { color: var(--ink); }
-.vcBlue .visLabel, .vcDark .visLabel { color: #fff; }
+.vcLight .visLabel,
+.vcBlue .visLabel,
+.vcDark .visLabel { color: #fff; }
 
 .visSub {
   font-size: 13px;
@@ -188,8 +218,9 @@
   position: relative;
   margin-bottom: 20px;
 }
-.vcLight .visSub { color: var(--muted); }
-.vcBlue .visSub, .vcDark .visSub { color: rgba(255,255,255,.5); }
+.vcLight .visSub,
+.vcBlue .visSub,
+.vcDark .visSub { color: rgba(255,255,255,.68); }
 
 .visTags {
   display: flex;
@@ -204,5 +235,42 @@
   padding: 5px 14px;
   border-radius: 100px;
 }
-.vcLight .visTag { background: rgba(13,60,194,.1); color: var(--blue); }
-.vcBlue .visTag, .vcDark .visTag { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+.vcLight .visTag,
+.vcBlue .visTag,
+.vcDark .visTag {
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 900px) {
+  .row { padding: 76px 0; }
+
+  .inner {
+    padding: 0 32px;
+    gap: 48px;
+  }
+}
+
+@media (max-width: 760px) {
+  .inner {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+
+  .rev .content,
+  .rev .visual {
+    order: initial;
+  }
+
+  .visual { order: -1 !important; }
+
+  .visCard {
+    min-height: 360px;
+    padding: 28px;
+    border-radius: 18px;
+  }
+
+  .feats { grid-template-columns: 1fr; }
+}

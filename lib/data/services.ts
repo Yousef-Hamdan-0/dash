@@ -9,6 +9,7 @@ export const services: ServiceItem[] = [
     vcStyle:  'light',
     visTags:  ['Logo', 'Colors', 'Typography', 'Guidelines'],
     features: ['', '', '', '', '', ''],
+    image:    '/images/services/branding.png',
   },
   {
     id:       '02',
@@ -18,6 +19,7 @@ export const services: ServiceItem[] = [
     vcStyle:  'light',
     visTags:  ['UI/UX', 'Frontend', 'Backend', 'CMS'],
     features: ['', '', '', '', '', ''],
+    image:    '/images/services/web-development.png',
   },
   {
     id:       '03',
@@ -27,6 +29,7 @@ export const services: ServiceItem[] = [
     vcStyle:  'blue',
     visTags:  ['Films', 'Reels', 'Animation', 'Motion'],
     features: ['', '', '', '', '', ''],
+    image:    '/images/services/motion.png',
   },
   {
     id:       '04',
@@ -36,6 +39,7 @@ export const services: ServiceItem[] = [
     vcStyle:  'light',
     visTags:  ['Dashboard', 'CRM', 'Analytics', 'API'],
     features: ['', '', '', '', '', ''],
+    image:    '/images/services/management-systems.png',
   },
   {
     id:       '05',
@@ -45,5 +49,6 @@ export const services: ServiceItem[] = [
     vcStyle:  'dark',
     visTags:  ['Unity', 'Unreal', '2D/3D', 'Interactive'],
     features: ['', '', '', '', '', ''],
+    image:    '/images/services/game-development.png',
   },
 ]

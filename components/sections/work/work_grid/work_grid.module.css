@@ -82,6 +82,15 @@
   z-index: 1;
 }
 
+.projectImage {
+  object-fit: cover;
+  transition: transform 0.25s;
+}
+
+.card:hover .projectImage {
+  transform: scale(1.04);
+}
+
 .imgInner span {
   font-family: var(--ff-b);
   font-size: 11px;

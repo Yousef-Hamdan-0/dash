@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
+import Image from 'next/image'
+import { ProjectRequestButton } from '@/components/sections/services/project_request_modal/project_request_modal'
 import { ServiceItem } from '@/types'
 import styles from './service_row.module.css'
 
@@ -51,7 +52,6 @@ interface Props { service: ServiceItem }
 
 export default function ServiceRow({ service }: Props) {
   const t = useTranslations(`services.items.${service.slug}`)
-  const st = useTranslations('services.shared')
 
   const rowClass = [
     styles.row,
@@ -61,6 +61,7 @@ export default function ServiceRow({ service }: Props) {
   ].join(' ')
 
   const vcClass = vcMap[service.vcStyle ?? 'light']
+  const serviceTitle = t('title').replace(/\s+/g, ' ').trim()
 
   return (
     <section className={rowClass} id={service.slug}>
@@ -77,17 +78,24 @@ export default function ServiceRow({ service }: Props) {
               <li key={i}>{t(`features.${i}`)}</li>
             ))}
           </ul>
-          <Link href="#contact" className={`${styles.btn} ${service.theme === 'dark' ? styles.btnGhost : service.theme === 'alt' ? styles.btnOutline : styles.btnPrimary}`}>
-            {t('cta')}
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path d="M1 6.5h11M7 2l4.5 4.5L7 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
+          <ProjectRequestButton
+            serviceTitle={serviceTitle}
+            label={t('cta')}
+            className={`${styles.btn} ${service.theme === 'dark' ? styles.btnGhost : service.theme === 'alt' ? styles.btnOutline : styles.btnPrimary}`}
+          />
         </div>
 
         {/* VISUAL */}
         <div className={styles.visual}>
           <div className={`${styles.visCard} ${vcClass}`}>
+            <Image
+              className={styles.serviceImage}
+              src={service.image}
+              alt={serviceTitle}
+              fill
+              sizes="(max-width: 760px) 100vw, 50vw"
+            />
+            <div className={styles.imageShade} />
             <div className={styles.circle1} />
             <div className={styles.circle2} />
             <div className={styles.bgNum}>{service.id}</div>

@@ -5,7 +5,10 @@
         "work": "Work",
         "experience": "Experience",
         "team": "Team",
-        "cta": "Let's Talk"
+        "cta": "Let's Talk",
+        "languageMenu": "Change display language",
+        "english": "English",
+        "arabic": "Arabic"
     },
     "home_hero": {
         "label": "My name is",
@@ -18,19 +21,30 @@
     "numbers": {
         "specialists": "Specialists on the team",
         "disciplines": "Disciplines mastered",
+        "projects": "Projects in the portfolio",
+        "testimonials": "Client testimonials",
         "ownership": "Ownership of every project",
         "ambition": "No limits on ambition"
     },
     "servicesSection": {
         "label": "What We Do",
         "title": "Five disciplines. <em>One studio.</em>",
+        "body": "We connect strategy, design, code, motion, and product thinking into one focused workflow, so every part of the project feels built by the same team.",
         "items": [
             "Branding & Visual Identity",
             "Web Design & Development",
             "Motion & Video Production",
             "Management Systems",
             "Game Development"
-        ]
+        ],
+        "descriptions": [
+            "Identity systems with a clear visual language across logo, color, type, and launch assets.",
+            "Responsive websites and web apps designed for trust, speed, and easy maintenance.",
+            "Motion pieces, launch videos, explainers, and interface animation that make ideas easier to feel.",
+            "Custom dashboards and internal tools shaped around how your team actually works.",
+            "Interactive experiences with strong mechanics, sharp interfaces, and production-ready structure."
+        ],
+        "cta": "Explore service"
     },
     "work": {
         "label": "Our Work",
@@ -186,6 +200,35 @@
       "visSub":     "Build worlds. Shape experiences."
     }
   },
+  "request": {
+    "title": "Start a project",
+    "service": "Selected service",
+    "servicePrefix": "Requested service",
+    "intro": "Send a short brief and we will reply with the next step.",
+    "name": "Your Name",
+    "namePh": "John Smith",
+      "email": "Email Address",
+      "emailPh": "john@company.com",
+      "phone": "Phone Number",
+      "phonePh": "+962 7X XXX XXXX",
+      "message": "Tell us more",
+    "messagePh": "Timeline, goals, references, budget range...",
+    "submit": "Send Request",
+    "sending": "Sending...",
+    "success": "Request sent. We'll be in touch soon.",
+    "error": "Something went wrong. Please try again.",
+    "contactTitle": "Prefer direct contact?",
+    "contactBody": "Reach us through the channel that works best for you.",
+    "emailContact": "Email",
+    "phoneContact": "Phone",
+    "whatsapp": "WhatsApp",
+    "whatsappValue": "Chat on WhatsApp",
+    "instagram": "Instagram",
+    "linkedin": "LinkedIn",
+    "behance": "Behance",
+    "twitter": "X / Twitter",
+    "close": "Close"
+  },
   "process": {
     "label": "How We Work",
     "title": "Three steps. <em>Zero guesswork.</em>",
@@ -209,12 +252,14 @@
     "title": "We let the work<br/><em>do the talking.</em>",
     "body":  "From brand identities to full-scale systems — every project here represents a problem solved, a story told, and a standard held.",
     "filters": {
+      "label":    "Discipline",
       "all":      "All Work",
       "branding": "Branding",
       "web":      "Web Design",
       "motion":   "Motion",
       "systems":  "Systems",
-      "games":    "Games"
+      "games":    "Games",
+      "count":    "{count} {count, plural, one {project} other {projects}}"
     },
     "stats": {
       "projects":    "Projects completed",
@@ -270,7 +315,7 @@
     "label": "Experience",
     "title": "New studio.<br/><em>Seasoned hands.</em>",
     "body":  "DASH may be young — but our team brings years of real, hands-on experience across industries that demand precision, creativity, and results.",
-    "yrs1":  "Years combined experience",
+    "yrs1":  "Active specialists",
     "yrs2":  "Projects delivered",
     "items": [
       { "title": "Clinics & Healthcare",         "sub": "Systems that simplify operations",     "tag": "Systems" },
