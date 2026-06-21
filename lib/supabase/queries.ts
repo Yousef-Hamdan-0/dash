@@ -170,6 +170,12 @@ async function createOptionalAuthedClient() {
 
 function createOptionalPublicClient() {
   if (!isSupabaseConfigured()) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'Supabase is not configured for production. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in the deployment environment.'
+      )
+    }
+
     return null
   }
 
