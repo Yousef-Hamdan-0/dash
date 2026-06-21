@@ -169,6 +169,42 @@
   box-shadow: 0 18px 34px rgba(17, 17, 24, .10);
 }
 
+.carouselPortrait {
+  position: relative;
+  width: min(78%, 320px);
+  aspect-ratio: 1 / 1.2;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(13, 60, 194, .12);
+  border-radius: 18px 18px 0 0;
+  background: var(--line);
+  box-shadow: 0 18px 34px rgba(17, 17, 24, .10);
+}
+
+.carouselPortraitImage {
+  object-fit: cover;
+  object-position: top;
+}
+
+.carouselPortraitBadge {
+  position: absolute;
+  inset-inline-start: 12px;
+  bottom: 12px;
+  z-index: 1;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 5px 9px;
+  background: rgba(255, 255, 255, .9);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
 .carouselInitials {
   font-family: var(--ff-h);
   font-size: clamp(38px, 5vw, 62px);

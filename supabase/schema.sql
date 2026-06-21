@@ -125,54 +125,12 @@ CREATE POLICY "admin_all_clients"      ON clients        FOR ALL TO authenticate
 -- CREATE POLICY "admin_write_media" ON storage.objects
 --   FOR ALL TO authenticated USING (bucket_id = 'media') WITH CHECK (bucket_id = 'media');
 
--- ─── Seed Data ───────────────────────────────────────────────────────────────
+-- ─── Initial Data ────────────────────────────────────────────────────────────
 
 -- Default site settings (insert once)
 INSERT INTO site_settings (site_name, seo_title, seo_description)
 VALUES ('DASH Studio', 'DASH Studio', 'Creative studio — Branding, Web, Motion, Systems, Games.')
 ON CONFLICT DO NOTHING;
 
--- Seed projects (migrated from lib/data/work.ts + messages/en.json)
-INSERT INTO projects (id, category, year, featured, color_class, title_en, title_ar, desc_en, desc_ar, sort_order) VALUES
-  ('p1',  'branding', '2024', true,  'brand',   'Brand Identity',          'هوية بصرية',             'Full visual identity — logo, guidelines, and brand world.',             'هوية بصرية كاملة — شعار، دليل العلامة، وعالم العلامة التجارية.', 0),
-  ('p2',  'web',      '2024', false, 'web',     'Web Application',         'تطبيق ويب',              'Clean, functional design built for real users and real goals.',         'تصميم أنيق وعملي مبني للمستخدمين الحقيقيين والأهداف الحقيقية.', 1),
-  ('p3',  'motion',   '2024', false, 'motion',  'Motion Campaign',         'حملة حركية',             'Storytelling in motion — from concept to final cut.',                  'رواية قصصية بالحركة — من الفكرة إلى المنتج النهائي.',             2),
-  ('p4',  'systems',  '2024', false, 'systems', 'Clinic System',           'نظام عيادة',             'Custom digital solution that simplified daily clinic operations.',      'حل رقمي مخصص يبسط العمليات اليومية في العيادة.',                  3),
-  ('p5',  'games',    '2024', false, 'games',   'Interactive Game',        'لعبة تفاعلية',           'An immersive experience built with creativity and technical precision.','تجربة غامرة مبنية بإبداع ودقة تقنية.',                            4),
-  ('p6',  'branding', '2025', false, 'brand',   'Startup Identity',        'هوية ناشئة',             'From zero to a full brand — helping a startup find its voice.',         'من الصفر إلى علامة تجارية كاملة — مساعدة ناشئة في إيجاد صوتها.',  5),
-  ('p7',  'web',      '2025', false, 'web',     'E-Commerce Platform',     'منصة تجارة إلكترونية',   'A fully custom storefront built for performance and conversion.',       'متجر مخصص بالكامل للأداء والتحويل.',                               6),
-  ('p8',  'motion',   '2025', false, 'motion',  'Brand Film',              'فيلم علامة تجارية',      'A cinematic brand story told in under two minutes.',                   'قصة علامة تجارية سينمائية في أقل من دقيقتين.',                     7),
-  ('p9',  'systems',  '2025', false, 'systems', 'Operations Dashboard',    'لوحة تحكم عمليات',       'Real-time ops visibility for a growing business.',                     'رؤية عمليات فورية لعمل في طريق النمو.',                            8),
-  ('p10', 'games',    '2025', false, 'games',   'Mobile Game',             'لعبة موبايل',            '2D mobile experience with tight mechanics and sharp visuals.',         'تجربة موبايل ثنائية الأبعاد بميكانيكا محكمة وصور حادة.',           9),
-  ('p11', 'branding', '2025', false, 'brand',   'Brand Refresh',           'تجديد علامة تجارية',     'Rethinking and rebuilding a brand that deserved to be seen.',          'إعادة تفكير وبناء علامة تجارية تستحق أن تُرى.',                    10),
-  ('p12', 'web',      '2025', false, 'web',     'Portfolio Website',       'موقع معرض أعمال',        'A designer''s portfolio — minimal, fast, and memorable.',              'معرض أعمال مصمم — بسيط وسريع ولا يُنسى.',                         11)
-ON CONFLICT (id) DO NOTHING;
-
--- Seed team members (migrated from lib/data/team.ts)
-INSERT INTO team_members (initials, name, role, badge, sort_order) VALUES
-  ('T1', 'Team Member',   'Brand Designer',    'Designer', 0),
-  ('T2', 'Yousef Hamdan', 'Full-Stack Dev',    'Dev',      1),
-  ('T3', 'Team Member',   'Motion Designer',   'Motion',   2),
-  ('T4', 'Team Member',   'Systems Engineer',  'Systems',  3),
-  ('T5', 'Team Member',   'Game Developer',    'Game Dev', 4),
-  ('T6', 'Team Member',   'Creative Director', 'Creative', 5)
-ON CONFLICT DO NOTHING;
-
--- Seed testimonials (migrated from messages/en.json exp.testimonials)
-INSERT INTO testimonials (quote_en, quote_ar, author_name, author_role, sort_order) VALUES
-  (
-    'DASH didn''t just design our clinic system — they thought through every workflow we had. The result actually changed how we operate day to day.',
-    'داش لم تصمم نظام العيادة فحسب — بل فكّرت في كل سير عمل لدينا. النتيجة غيّرت فعلاً طريقة عملنا يوماً بيوم.',
-    'Ahmad K.', 'Clinic Director', 0
-  ),
-  (
-    'We came to them with a vague idea and left with a brand identity that felt exactly like us. Fast, sharp, and professional from day one.',
-    'جئنا إليهم بفكرة مبهمة وغادرنا بهوية علامة تجارية تعبّر عنا تماماً. سريعون وحادون ومحترفون من اليوم الأول.',
-    'Sara M.', 'Startup Founder', 1
-  ),
-  (
-    'The motion content they made for our launch campaign stopped people mid-scroll. We saw engagement go up immediately after the videos dropped.',
-    'محتوى الحركة الذي صنعوه لحملة إطلاقنا أوقف الناس أثناء التمرير. لاحظنا ارتفاع التفاعل فور نشر الفيديوهات.',
-    'Rami H.', 'Marketing Lead', 2
-  )
-ON CONFLICT DO NOTHING;
+-- Projects, team members, and testimonials are intentionally not seeded.
+-- Add real content through /dashboard so production never starts with demo data.

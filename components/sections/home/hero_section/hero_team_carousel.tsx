@@ -1,6 +1,7 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocale } from 'next-intl'
 import styles from './hero_section.module.css'
 
@@ -13,25 +14,12 @@ type HeroTeamMember = {
   image_url: string | null
 }
 
-const fallbackMembers: HeroTeamMember[] = [
-  { id: 'slot-1', initials: 'T1', name: 'Team Member', role: 'Brand Designer',    badge: 'Design', image_url: null },
-  { id: 'slot-2', initials: 'T2', name: 'Team Member', role: 'Web Developer',     badge: 'Web',    image_url: null },
-  { id: 'slot-3', initials: 'T3', name: 'Team Member', role: 'Motion Designer',   badge: 'Motion', image_url: null },
-  { id: 'slot-4', initials: 'T4', name: 'Team Member', role: 'Systems Engineer',  badge: 'Ops',    image_url: null },
-  { id: 'slot-5', initials: 'T5', name: 'Team Member', role: 'Game Developer',    badge: 'Game',   image_url: null },
-  { id: 'slot-6', initials: 'T6', name: 'Team Member', role: 'Creative Director', badge: 'Lead',   image_url: null },
-]
-
 const swapDuration = 560
 
 export default function HeroTeamCarousel({ members }: { members: HeroTeamMember[] }) {
   const locale = useLocale()
   const isArabic = locale === 'ar'
-  const slides = useMemo(() => {
-    const placeholders = members.map((member) => ({ ...member, image_url: null }))
-    if (placeholders.length >= fallbackMembers.length) return placeholders
-    return [...placeholders, ...fallbackMembers.slice(placeholders.length)]
-  }, [members])
+  const slides = members
   const [frontIndex, setFrontIndex] = useState(0)
   const [backIndex, setBackIndex] = useState(1)
   const [swapDirection, setSwapDirection] = useState<'next' | 'previous'>('next')
@@ -39,6 +27,7 @@ export default function HeroTeamCarousel({ members }: { members: HeroTeamMember[
   const swapTimerRef = useRef<number | null>(null)
 
   const normalizeIndex = useCallback((index: number) => {
+    if (slides.length === 0) return 0
     return (index + slides.length) % slides.length
   }, [slides.length])
 
@@ -119,6 +108,8 @@ export default function HeroTeamCarousel({ members }: { members: HeroTeamMember[
     return classes.join(' ')
   }
 
+  if (!activeSlide) return null
+
   return (
     <div
       className={styles.carousel}
@@ -135,35 +126,53 @@ export default function HeroTeamCarousel({ members }: { members: HeroTeamMember[
               className={getSlideClassName(index)}
               aria-hidden={!active}
             >
-              <div className={styles.carouselFallback}>
-                <span className={styles.carouselInitials}>{member.initials}</span>
-                <span className={styles.carouselBadge}>{member.badge}</span>
-              </div>
+              {member.image_url ? (
+                <div className={styles.carouselPortrait}>
+                  <Image
+                    src={member.image_url}
+                    alt={member.name}
+                    fill
+                    unoptimized
+                    sizes="(max-width: 900px) 70vw, 320px"
+                    className={styles.carouselPortraitImage}
+                  />
+                  <span className={styles.carouselPortraitBadge}>{member.badge}</span>
+                </div>
+              ) : (
+                <div className={styles.carouselFallback}>
+                  <span className={styles.carouselInitials}>{member.initials}</span>
+                  <span className={styles.carouselBadge}>{member.badge}</span>
+                </div>
+              )}
             </div>
           )
         })}
       </div>
 
-      <button
-        type="button"
-        className={`${styles.carouselArrow} ${styles.carouselArrowPrev}`}
-        aria-label={isArabic ? 'صورة الفريق السابقة' : 'Previous team photo'}
-        onClick={showPrevious}
-      >
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M10 3.5 5.5 8l4.5 4.5" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        className={`${styles.carouselArrow} ${styles.carouselArrowNext}`}
-        aria-label={isArabic ? 'صورة الفريق التالية' : 'Next team photo'}
-        onClick={showNext}
-      >
-        <svg viewBox="0 0 16 16" aria-hidden="true">
-          <path d="m6 3.5 4.5 4.5L6 12.5" />
-        </svg>
-      </button>
+      {slides.length > 1 && (
+        <>
+          <button
+            type="button"
+            className={`${styles.carouselArrow} ${styles.carouselArrowPrev}`}
+            aria-label={isArabic ? 'صورة الفريق السابقة' : 'Previous team photo'}
+            onClick={showPrevious}
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M10 3.5 5.5 8l4.5 4.5" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className={`${styles.carouselArrow} ${styles.carouselArrowNext}`}
+            aria-label={isArabic ? 'صورة الفريق التالية' : 'Next team photo'}
+            onClick={showNext}
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m6 3.5 4.5 4.5L6 12.5" />
+            </svg>
+          </button>
+        </>
+      )}
 
       <div className={styles.carouselInfo}>
         <div className={styles.carouselCopy}>
@@ -172,17 +181,19 @@ export default function HeroTeamCarousel({ members }: { members: HeroTeamMember[
         </div>
       </div>
 
-      <div className={styles.carouselDots}>
-        {slides.map((member, index) => (
-          <button
-            key={member.id}
-            type="button"
-            className={`${styles.carouselDot} ${index === activeIndex ? styles.carouselDotActive : ''}`}
-            aria-label={isArabic ? `عرض ${member.name}` : `Show ${member.name}`}
-            onClick={() => showSlide(index, index > activeIndex ? 'next' : 'previous')}
-          />
-        ))}
-      </div>
+      {slides.length > 1 && (
+        <div className={styles.carouselDots}>
+          {slides.map((member, index) => (
+            <button
+              key={member.id}
+              type="button"
+              className={`${styles.carouselDot} ${index === activeIndex ? styles.carouselDotActive : ''}`}
+              aria-label={isArabic ? `عرض ${member.name}` : `Show ${member.name}`}
+              onClick={() => showSlide(index, index > activeIndex ? 'next' : 'previous')}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

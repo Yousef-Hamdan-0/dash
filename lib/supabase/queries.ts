@@ -197,7 +197,7 @@ async function fetchProjects(): Promise<DbProject[]> {
 
 export const getProjects = unstable_cache(
   fetchProjects,
-  ['dash-public-projects'],
+  ['dash-public-projects-v2'],
   { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
 )
 
@@ -216,7 +216,7 @@ async function fetchFeaturedProject(): Promise<DbProject | null> {
 
 export const getFeaturedProject = unstable_cache(
   fetchFeaturedProject,
-  ['dash-public-featured-project'],
+  ['dash-public-featured-project-v2'],
   { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
 )
 
@@ -248,7 +248,7 @@ async function fetchTeamMembers(): Promise<DbTeamMember[]> {
 
 export const getTeamMembers = unstable_cache(
   fetchTeamMembers,
-  ['dash-public-team-members'],
+  ['dash-public-team-members-v2'],
   { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
 )
 
@@ -280,7 +280,7 @@ async function fetchTestimonials(): Promise<DbTestimonial[]> {
 
 export const getTestimonials = unstable_cache(
   fetchTestimonials,
-  ['dash-public-testimonials'],
+  ['dash-public-testimonials-v2'],
   { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
 )
 
@@ -312,7 +312,7 @@ async function fetchSiteSettings(): Promise<DbSiteSettings | null> {
 
 export const getSiteSettings = unstable_cache(
   fetchSiteSettings,
-  ['dash-public-site-settings'],
+  ['dash-public-site-settings-v2'],
   { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
 )
 
