@@ -267,10 +267,28 @@
   .visual { order: -1 !important; }
 
   .visCard {
-    min-height: 360px;
-    padding: 28px;
+    min-height: 320px;
+    padding: 24px;
     border-radius: 18px;
   }
 
   .feats { grid-template-columns: 1fr; }
+
+  .row {
+    padding: 68px 0;
+  }
+
+  .title {
+    font-size: clamp(30px, 10vw, 40px);
+  }
+
+  .body {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

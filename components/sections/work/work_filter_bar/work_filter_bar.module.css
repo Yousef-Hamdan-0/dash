@@ -97,6 +97,7 @@
 
 @media (max-width: 760px) {
   .bar {
+    top: 64px;
     padding: 12px 24px;
   }
 
@@ -121,5 +122,11 @@
 
   .summary {
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .bar {
+    padding-inline: 20px;
   }
 }

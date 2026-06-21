@@ -29,6 +29,15 @@
     text-decoration: none;
     letter-spacing: 3px;
 }
+
+.logo img {
+    width: 120px;
+    height: auto;
+}
+
+.menuButton {
+    display: none;
+}
 .logoDot {
     width: 7px;
     height: 7px;
@@ -241,5 +250,136 @@
 
     .langButtonText {
         display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .nav {
+        height: 64px;
+        padding: 0 20px;
+    }
+
+    .logo img {
+        width: 104px;
+    }
+
+    .menuButton {
+        width: 42px;
+        height: 42px;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, .82);
+        color: var(--ink);
+        cursor: pointer;
+    }
+
+    .menuButton span {
+        width: 18px;
+        height: 1.5px;
+        border-radius: 999px;
+        background: currentColor;
+        transition: transform .2s, opacity .2s;
+    }
+
+    .menuButtonOpen span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .menuButtonOpen span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menuButtonOpen span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    .links {
+        position: fixed;
+        inset: 64px 0 auto;
+        max-height: calc(100dvh - 64px);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        overflow-y: auto;
+        padding: 18px 20px 24px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: rgba(245, 246, 250, .98);
+        box-shadow: 0 20px 40px rgba(17, 17, 24, .12);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-12px);
+        transition: opacity .2s, visibility .2s, transform .2s;
+    }
+
+    .linksOpen {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .links li,
+    .link,
+    .cta,
+    .langItem {
+        width: 100%;
+    }
+
+    .link,
+    .cta {
+        min-height: 46px;
+        justify-content: center;
+        border-radius: 9px;
+        font-size: 14px;
+    }
+
+    .linkActive {
+        background: var(--white);
+    }
+
+    .linkActive::after {
+        bottom: 5px;
+    }
+
+    .langItem {
+        display: grid;
+    }
+
+    .langButton {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .langButtonText {
+        display: inline;
+    }
+
+    .langPanel {
+        position: static;
+        min-width: 0;
+        max-height: 0;
+        overflow: hidden;
+        padding-block: 0;
+        border-width: 0;
+        box-shadow: none;
+        opacity: 0;
+        transform: none;
+        transition: max-height .2s, opacity .2s, padding .2s, border-width .2s;
+    }
+
+    .langPanelOpen {
+        max-height: 120px;
+        margin-top: 6px;
+        padding: 8px;
+        border-width: 1px;
+        opacity: 1;
     }
 }

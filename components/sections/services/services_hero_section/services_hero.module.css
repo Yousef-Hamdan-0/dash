@@ -227,4 +227,22 @@
   .cardNum { font-size: 52px; }
   .cardTitle { font-size: 24px; }
   .cardSub { margin-bottom: 24px; }
+
+  .h1 {
+    font-size: clamp(42px, 13vw, 56px);
+  }
+
+  .sub {
+    margin-bottom: 28px;
+  }
+
+  .pill {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .cardBtn {
+    width: 100%;
+    justify-content: center;
+  }
 }

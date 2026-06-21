@@ -819,8 +819,11 @@ textarea {
 
   .dash-nav {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(140px, 1fr);
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
   }
 
   .dash-nav__link,
@@ -1028,12 +1031,42 @@ textarea {
   }
 
   .dash-nav {
-    grid-template-columns: repeat(5, 150px);
+    grid-template-columns: none;
+    grid-auto-columns: 136px;
   }
 
   .dash-topbar {
     align-items: flex-start;
     flex-direction: column;
     padding-block: 16px;
+  }
+
+  .dash-panel__head,
+  .dash-testimonial-card__top {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dash-filter-search,
+  .dash-filter-select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dash-detail-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .dash-login {
+    padding: 16px;
+  }
+
+  .dash-login__head {
+    padding: 24px 20px 18px;
+  }
+
+  .dash-login__form {
+    padding: 22px 20px 24px;
   }
 }

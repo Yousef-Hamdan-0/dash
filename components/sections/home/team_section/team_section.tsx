@@ -1,11 +1,18 @@
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { getTeamMembers } from '@/lib/supabase/queries'
 import styles from './team_section.module.css'
 import Image from 'next/image'
 
 export default async function TeamSection() {
-  const t    = await getTranslations('team')
-  const team = await getTeamMembers()
+  const [t, locale, team] = await Promise.all([
+    getTranslations('team'),
+    getLocale(),
+    getTeamMembers(),
+  ])
+  const isArabic = locale === 'ar'
+  const teamHeading = isArabic
+    ? `${team.length} ${team.length === 1 ? 'عقل' : 'عقول'}.`
+    : `${team.length} ${team.length === 1 ? 'mind' : 'minds'}.`
 
   return (
     <section className={styles.sec} id="team">
@@ -13,7 +20,9 @@ export default async function TeamSection() {
 
         <div className={styles.hd}>
           <span className={styles.label}>{t('label')}</span>
-          <h2 className={styles.h2} dangerouslySetInnerHTML={{ __html: t.raw('title') }} />
+          <h2 className={styles.h2}>
+            {teamHeading} <em>{isArabic ? 'اتجاه واحد.' : 'One direction.'}</em>
+          </h2>
           <p className={styles.sub}>{t('body')}</p>
         </div>
 

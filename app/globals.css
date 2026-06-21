@@ -48,3 +48,39 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --pad-x: 20px;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}

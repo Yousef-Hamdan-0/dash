@@ -35,3 +35,25 @@
 .links a:hover {
     color: #fff;
 }
+
+@media (max-width: 760px) {
+    .footer {
+        padding: 28px 20px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .copy {
+        order: 3;
+        max-width: 260px;
+        line-height: 1.5;
+    }
+
+    .links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 20px;
+    }
+}

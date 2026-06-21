@@ -159,3 +159,32 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+@media (max-width: 900px) {
+  .inner {
+    padding: 0 48px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sec {
+    padding: 76px 0 64px;
+  }
+
+  .inner {
+    padding: 0 20px;
+    gap: 36px;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .email {
+    width: 100%;
+    justify-content: center;
+    overflow-wrap: anywhere;
+  }
+}

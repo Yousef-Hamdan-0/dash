@@ -150,3 +150,55 @@
 }
 
 .card:hover .link { gap: 10px; }
+
+@media (max-width: 900px) {
+  .wrap {
+    padding: 0 48px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .sec {
+    padding: 76px 0;
+  }
+
+  .wrap {
+    padding: 0 20px;
+  }
+
+  .hd {
+    margin-bottom: 32px;
+  }
+
+  .grid {
+    gap: 16px;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+
+  .top {
+    min-height: 210px;
+    padding: 26px 22px;
+  }
+
+  .top::before,
+  .health .top::before,
+  .startup .top::before,
+  .creator .top::before {
+    font-size: 112px;
+  }
+
+  .brand .top::before {
+    font-size: 140px;
+  }
+
+  .bottom {
+    padding: 24px 22px;
+  }
+}

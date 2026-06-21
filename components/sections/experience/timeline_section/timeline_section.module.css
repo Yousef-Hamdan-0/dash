@@ -120,3 +120,50 @@
   border-radius: 6px;
   border: 1px solid var(--line);
 }
+
+@media (max-width: 900px) {
+  .wrap {
+    padding: 0 48px;
+  }
+
+  .item {
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 680px) {
+  .sec {
+    padding: 76px 0;
+  }
+
+  .wrap {
+    padding: 0 20px;
+  }
+
+  .hd {
+    margin-bottom: 36px;
+  }
+
+  .tl {
+    padding-inline-start: 18px;
+  }
+
+  .item {
+    padding: 0 0 44px 28px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .dot {
+    inset-inline-start: -7px;
+  }
+
+  .year {
+    font-size: 22px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}

@@ -10,16 +10,14 @@ export default async function FeaturedProject() {
   const t        = await getTranslations('work_page.featured')
   const locale   = await getLocale()
   const featured = await getFeaturedProject()
+  if (!featured) return null
+
   const isAr     = locale === 'ar'
-  const title    = featured
-    ? isAr && featured.title_ar ? featured.title_ar : featured.title_en
-    : t('projectTitle')
-  const desc     = featured
-    ? isAr && featured.desc_ar ? featured.desc_ar : (featured.desc_en ?? '')
-    : t('desc')
-  const tag      = featured
-    ? isAr ? (catLabelsAr[featured.category] ?? featured.category) : (catLabels[featured.category] ?? featured.category)
-    : t('tag')
+  const title    = isAr && featured.title_ar ? featured.title_ar : featured.title_en
+  const desc     = isAr && featured.desc_ar ? featured.desc_ar : (featured.desc_en ?? '')
+  const tag      = isAr
+    ? (catLabelsAr[featured.category] ?? featured.category)
+    : (catLabels[featured.category] ?? featured.category)
 
   return (
     <section className={styles.sec}>
@@ -33,7 +31,7 @@ export default async function FeaturedProject() {
         <div className={styles.card}>
           {/* Image */}
           <div className={styles.img}>
-            {featured?.image_url ? (
+            {featured.image_url ? (
               <Image
                 src={featured.image_url}
                 alt={title}
@@ -66,7 +64,7 @@ export default async function FeaturedProject() {
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLbl}>{t('meta.year')}</span>
-                <span className={styles.metaVal}>{featured?.year ?? '2025'}</span>
+                <span className={styles.metaVal}>{featured.year}</span>
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLbl}>{t('meta.scope')}</span>

@@ -6,7 +6,7 @@
   font-size: 14px;
   font-weight: 500;
   padding: 13px 28px;
-  margin-right: 8px;
+  margin: 0;
 
   border-radius: 9px;
   text-decoration: none;
@@ -54,4 +54,11 @@
 
 .white:hover {
   box-shadow: var(--s2);
+}
+
+@media (max-width: 480px) {
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

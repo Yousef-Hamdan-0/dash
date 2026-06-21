@@ -135,3 +135,42 @@
   font-size: 12px;
   letter-spacing: 2px;
 }
+
+@media (max-width: 980px) {
+  .wrap {
+    padding: 0 48px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .sec {
+    padding: 76px 0;
+  }
+
+  .wrap {
+    padding: 0 20px;
+  }
+
+  .hd {
+    margin-bottom: 32px;
+  }
+
+  .card {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .meta {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .stars {
+    width: 100%;
+    margin-inline-start: 54px;
+  }
+}

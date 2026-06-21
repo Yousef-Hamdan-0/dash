@@ -21,6 +21,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [hash, setHash] = useState('')
   const [languageOpen, setLanguageOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const languageMenuRef = useRef<HTMLLIElement>(null)
   const pathname = normalizePath(usePathname())
   const locale = useLocale()
@@ -79,6 +80,13 @@ export default function Nav() {
     }
   }, [languageOpen])
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
   function isActive(href: string) {
     const [targetPath] = href.split('#')
     const targetHash = getHrefHash(href)
@@ -97,6 +105,8 @@ export default function Nav() {
 
   function handleNavigate(href: string) {
     setHash(getHrefHash(href))
+    setMenuOpen(false)
+    setLanguageOpen(false)
   }
 
   return (
@@ -105,7 +115,23 @@ export default function Nav() {
         <Image src={ASSETS.logo} alt="DASH Studio" width={120} height={32} priority />
       </Link>
 
-      <ul className={style.links}>
+      <button
+        type="button"
+        className={`${style.menuButton} ${menuOpen ? style.menuButtonOpen : ''}`}
+        aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={menuOpen}
+        aria-controls="primary-navigation"
+        onClick={() => {
+          setMenuOpen((open) => !open)
+          setLanguageOpen(false)
+        }}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
+      <ul id="primary-navigation" className={`${style.links} ${menuOpen ? style.linksOpen : ''}`}>
         {links.map(link => (
           <li key={link.href}>
             <Link
@@ -149,7 +175,10 @@ export default function Nav() {
                   locale={option.locale}
                   aria-current={active ? 'true' : undefined}
                   className={`${style.langOption} ${active ? style.langOptionActive : ''}`}
-                  onClick={() => setLanguageOpen(false)}
+                  onClick={() => {
+                    setLanguageOpen(false)
+                    setMenuOpen(false)
+                  }}
                 >
                   <span className={style.langShort}>{option.short}</span>
                   <span>{option.label}</span>
