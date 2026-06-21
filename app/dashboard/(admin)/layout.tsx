@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Sidebar from '@/app/dashboard/components/sidebar'
 import { isSupabaseConfigured } from '@/lib/supabase/config'
 import { createClient } from '@/lib/supabase/server'
+import DashLogo from '@/app/dashboard/components/dash-logo'
 
 export default async function DashboardAdminLayout({
   children,
@@ -14,10 +15,7 @@ export default async function DashboardAdminLayout({
       <div className="dash-login">
         <div className="dash-login__card">
           <div className="dash-login__head">
-            <span className="dash-logo">
-              DASH
-              <span className="dash-logo__dot" />
-            </span>
+            <DashLogo />
           </div>
           <div className="dash-login__form">
             <h1 className="dash-section-title">Supabase is not configured</h1>

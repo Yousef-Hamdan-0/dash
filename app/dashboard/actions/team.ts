@@ -6,6 +6,22 @@ import { redirect } from 'next/navigation'
 import { getUploadFieldError } from './upload-fields'
 import { PUBLIC_SITE_CACHE_TAG } from '@/lib/cache-tags'
 
+async function generateNextInitials(supabase: Awaited<ReturnType<typeof createClient>>): Promise<string> {
+  const { data } = await supabase
+    .from('team_members')
+    .select('initials')
+
+  const numbers = (data ?? [])
+    .map((m: { initials: string }) => {
+      const match = m.initials?.match(/^T(\d+)$/)
+      return match ? parseInt(match[1], 10) : 0
+    })
+    .filter((n: number) => n > 0)
+
+  const max = numbers.length > 0 ? Math.max(...numbers) : 0
+  return `T${max + 1}`
+}
+
 export async function createTeamMember(_prev: unknown, formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -14,8 +30,10 @@ export async function createTeamMember(_prev: unknown, formData: FormData) {
   const uploadError = getUploadFieldError(formData, 'image_url', 'Photo')
   if (uploadError) return { error: uploadError }
 
+  const initials = await generateNextInitials(supabase)
+
   const { error } = await supabase.from('team_members').insert({
-    initials:   String(formData.get('initials')),
+    initials,
     name:       String(formData.get('name')),
     role:       String(formData.get('role')),
     badge:      String(formData.get('badge')),
@@ -28,7 +46,7 @@ export async function createTeamMember(_prev: unknown, formData: FormData) {
 
   revalidateTag(PUBLIC_SITE_CACHE_TAG, 'max')
   revalidatePath('/', 'layout')
-  redirect('/dashboard/team')
+  return { success: true }
 }
 
 export async function updateTeamMember(id: string, _prev: unknown, formData: FormData) {

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getAllProjects, getAllTeamMembers, getAllTestimonials, getAllClients } from '@/lib/supabase/queries'
+import AddClientModal from './clients/add-client-modal'
 
 export default async function DashboardPage() {
   const [projects, team, testimonials, clients] = await Promise.all([
@@ -34,6 +35,7 @@ export default async function DashboardPage() {
           <h1 className="dash-title">Studio overview</h1>
           <p className="dash-copy">Manage the content that powers the DASH Studio website.</p>
         </div>
+        <AddClientModal />
       </header>
 
       <section className="dash-stat-grid">

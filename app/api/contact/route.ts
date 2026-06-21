@@ -38,12 +38,12 @@ export async function POST(req: NextRequest) {
   const message = textField(body.message, 3000)
   const source = body.source === 'services' ? 'services' : 'website'
 
-  if (!name || !email || !project || !message || !emailPattern.test(email)) {
-    return NextResponse.json({ error: 'All fields required' }, { status: 400 })
+  if (!name || !email || !phone || !project || !message) {
+    return NextResponse.json({ error: 'Name, email, phone, project, and message are required' }, { status: 400 })
   }
 
-  if (source === 'services' && !phone) {
-    return NextResponse.json({ error: 'Phone number is required' }, { status: 400 })
+  if (!emailPattern.test(email)) {
+    return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
   }
 
   if (!isSupabaseConfigured()) {

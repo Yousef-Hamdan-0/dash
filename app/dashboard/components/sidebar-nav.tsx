@@ -3,14 +3,17 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { logout } from '@/app/dashboard/actions/auth'
+import DashLogo from './dash-logo'
 
 const nav = [
-  { href: '/dashboard',              label: 'Overview',    icon: '⊞' },
-  { href: '/dashboard/clients',      label: 'Clients',     icon: '✉' },
-  { href: '/dashboard/projects',     label: 'Projects',    icon: '◈' },
-  { href: '/dashboard/team',         label: 'Team',        icon: '◎' },
-  { href: '/dashboard/testimonials', label: 'Testimonials',icon: '❝' },
-  { href: '/dashboard/settings',     label: 'Settings',    icon: '⚙' },
+  { href: '/dashboard',                  label: 'Overview',       icon: '⊞' },
+  { href: '/dashboard/clients',          label: 'Clients',        icon: '✉' },
+  { href: '/dashboard/announcements',    label: 'Announcements',  icon: '◉' },
+  { href: '/dashboard/journey',          label: 'Journey',        icon: '◌' },
+  { href: '/dashboard/projects',         label: 'Projects',       icon: '◈' },
+  { href: '/dashboard/team',             label: 'Team',           icon: '◎' },
+  { href: '/dashboard/testimonials',     label: 'Testimonials',   icon: '❝' },
+  { href: '/dashboard/settings',         label: 'Settings',       icon: '⚙' },
 ]
 
 export default function SidebarNav({ newClientsCount }: { newClientsCount: number }) {
@@ -19,10 +22,7 @@ export default function SidebarNav({ newClientsCount }: { newClientsCount: numbe
   return (
     <aside className="dash-sidebar">
       <div className="dash-sidebar__brand">
-        <Link href="/dashboard" className="dash-logo">
-          DASH
-          <span className="dash-logo__dot" />
-        </Link>
+        <DashLogo asLink href="/dashboard" />
         <div className="dash-sidebar__meta">
           <span className="dash-sidebar__line" />
           Admin Studio

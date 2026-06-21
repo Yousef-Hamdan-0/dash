@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import styles from './industries_section.module.css'
 
 const cards = [
@@ -34,9 +35,9 @@ export default function IndustriesSection() {
                     <span key={i} className={styles.tag}>{t(`cards.${c.key}.tags.${i}`)}</span>
                   ))}
                 </div>
-                <a href="#" className={styles.link}>
+                <Link href="/work" className={styles.link}>
                   {t('viewWork')} →
-                </a>
+                </Link>
               </div>
             </div>
           ))}

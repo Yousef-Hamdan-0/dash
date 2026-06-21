@@ -4,10 +4,10 @@ import FeaturedProject from '@/components/sections/work/featured_project/feature
 import WorkGrid        from '@/components/sections/work/work_grid/work_grid'
 import WorkCTA         from '@/components/sections/work/work_cta/work_cta'
 import { WorkProvider } from '@/components/sections/work/work_provider'
-import { getProjects }  from '@/lib/supabase/queries'
+import { getProjects, getSiteSettings } from '@/lib/supabase/queries'
 
 export default async function WorkPage() {
-  const projects = await getProjects()
+  const [projects, settings] = await Promise.all([getProjects(), getSiteSettings()])
 
   return (
     <WorkProvider projects={projects}>
@@ -15,7 +15,7 @@ export default async function WorkPage() {
       <WorkFilterBar />
       <FeaturedProject />
       <WorkGrid />
-      <WorkCTA />
+      <WorkCTA email={settings?.contact_email || process.env.CONTACT_EMAIL || 'hello@dash.studio'} />
     </WorkProvider>
   )
 }

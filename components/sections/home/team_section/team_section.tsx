@@ -10,6 +10,8 @@ export default async function TeamSection() {
     getTeamMembers(),
   ])
   const isArabic = locale === 'ar'
+  if (team.length === 0) return null
+
   const teamHeading = isArabic
     ? `${team.length} ${team.length === 1 ? 'عقل' : 'عقول'}.`
     : `${team.length} ${team.length === 1 ? 'mind' : 'minds'}.`

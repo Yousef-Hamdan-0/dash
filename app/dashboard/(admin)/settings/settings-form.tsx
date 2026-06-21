@@ -58,6 +58,13 @@ export default function SettingsForm({ settings }: { settings: DbSiteSettings | 
             placeholder="noreply@yourdomain.com"
             hint="Must be a verified Resend domain in production."
           />
+          <FormField
+            label="Team Phone Number"
+            name="team_phone"
+            value={settings?.team_phone ?? ''}
+            placeholder="+962 7X XXX XXXX"
+            hint="Shown in the contact section and footer on the public website."
+          />
         </div>
 
         <div className="dash-form-card">
@@ -74,10 +81,10 @@ export default function SettingsForm({ settings }: { settings: DbSiteSettings | 
 
         <div className="dash-form-card">
           <h2 className="dash-form-card__title">Social Links</h2>
-          <FormField label="Instagram" name="instagram" value={settings?.instagram ?? ''} placeholder="https://instagram.com/dashstudio" />
-          <FormField label="Twitter / X" name="twitter"   value={settings?.twitter   ?? ''} placeholder="https://twitter.com/dashstudio" />
-          <FormField label="LinkedIn"   name="linkedin"   value={settings?.linkedin   ?? ''} placeholder="https://linkedin.com/company/dashstudio" />
-          <FormField label="Behance"    name="behance"    value={settings?.behance    ?? ''} placeholder="https://behance.net/dashstudio" />
+          <FormField label="Instagram" name="instagram" type="url" value={settings?.instagram ?? ''} placeholder="https://instagram.com/dashstudio" />
+          <FormField label="Twitter / X" name="twitter" type="url" value={settings?.twitter ?? ''} placeholder="https://x.com/dashstudio" />
+          <FormField label="LinkedIn" name="linkedin" type="url" value={settings?.linkedin ?? ''} placeholder="https://linkedin.com/company/dashstudio" />
+          <FormField label="Behance" name="behance" type="url" value={settings?.behance ?? ''} placeholder="https://behance.net/dashstudio" />
         </div>
 
         <button

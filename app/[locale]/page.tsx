@@ -5,7 +5,11 @@ import WorkGrid from '@/components/sections/home/work_grid_section/work_grid'
 import Team from '@/components/sections/home/team_section/team_section'
 import Experience from '@/components/sections/home/experience_section/experience_section'
 import Contact from '@/components/sections/home/contact_section/contact_section'
-export default function Home() {
+import { getSiteSettings } from '@/lib/supabase/queries'
+
+export default async function Home() {
+  const settings = await getSiteSettings()
+
   return (
     <main>
       <Hero />
@@ -14,7 +18,7 @@ export default function Home() {
       <WorkGrid />
       <Experience />
       <Team />
-      <Contact />
+      <Contact teamPhone={settings?.team_phone} teamEmail={settings?.contact_email} />
     </main>
   )
 }

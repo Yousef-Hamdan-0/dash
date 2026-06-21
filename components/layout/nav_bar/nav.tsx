@@ -112,7 +112,7 @@ export default function Nav() {
   return (
     <nav className={`${style.nav} ${scrolled ? style.navScrolled : ''}`}>
       <Link href="/" className={style.logo}>
-        <Image src={ASSETS.logo} alt="DASH Studio" width={120} height={32} priority />
+        <Image src={ASSETS.logo} alt="DASH Studio" width={120} height={36} priority />
       </Link>
 
       <button

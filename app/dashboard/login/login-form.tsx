@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react'
 import { login } from '@/app/dashboard/actions/auth'
+import DashLogo from '@/app/dashboard/components/dash-logo'
 
 export default function LoginForm() {
   const [state, action, pending] = useActionState(login, undefined)
@@ -10,11 +11,8 @@ export default function LoginForm() {
     <div className="dash-login">
       <div className="dash-login__card">
         <div className="dash-login__head">
-          <span className="dash-logo">
-            DASH
-            <span className="dash-logo__dot" />
-          </span>
-          <p className="dash-copy">Admin Dashboard</p>
+          <DashLogo />
+          <p className="dash-copy" style={{ marginTop: 8 }}>Admin Dashboard</p>
         </div>
 
         <form action={action} className="dash-login__form">

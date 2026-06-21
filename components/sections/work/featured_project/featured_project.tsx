@@ -71,7 +71,7 @@ export default async function FeaturedProject() {
                 <span className={styles.metaVal}>{t('meta.scopeVal')}</span>
               </div>
             </div>
-            <a href="#" className={styles.btn}>
+            <a href={`#project-${featured.id}`} className={styles.btn}>
               {t('btn')}
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <path d="M1 6.5h11M7 2l4.5 4.5L7 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

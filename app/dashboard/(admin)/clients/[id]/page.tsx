@@ -4,6 +4,7 @@ import { getClientById } from '@/lib/supabase/queries'
 import { updateClientStatus, deleteClient } from '@/app/dashboard/actions/clients'
 import ConfirmDeleteButton from '@/app/dashboard/components/confirm-delete-button'
 import type { DbClient } from '@/lib/supabase/queries'
+import ClientSeenMarker from '../client-seen-marker'
 
 const STATUS_OPTIONS: { value: DbClient['status']; label: string }[] = [
   { value: 'new',       label: 'New' },
@@ -52,6 +53,7 @@ export default async function ClientDetailPage({ params }: PageProps) {
 
   return (
     <div className="dash-page dash-form-page">
+      {!client.seen_at && <ClientSeenMarker ids={id} />}
       <header className="dash-header">
         <div className="dash-header__main">
           <nav className="dash-breadcrumb">
@@ -69,13 +71,15 @@ export default async function ClientDetailPage({ params }: PageProps) {
           </p>
         </div>
         <div className="dash-header__actions">
-          <a
-            href={`mailto:${client.email}`}
-            className="dash-button dash-button--primary"
-          >
-            Reply by email
-            <span aria-hidden="true">↗</span>
-          </a>
+          {client.email && (
+            <a
+              href={`mailto:${client.email}`}
+              className="dash-button dash-button--primary"
+            >
+              Reply by email
+              <span aria-hidden="true">↗</span>
+            </a>
+          )}
         </div>
       </header>
 
@@ -88,12 +92,14 @@ export default async function ClientDetailPage({ params }: PageProps) {
             <dt className="dash-detail-label">Full name</dt>
             <dd className="dash-detail-value">{client.name}</dd>
           </div>
-          <div className="dash-detail-row">
-            <dt className="dash-detail-label">Email</dt>
-            <dd className="dash-detail-value">
-              <a href={`mailto:${client.email}`} className="dash-link">{client.email}</a>
-            </dd>
-          </div>
+          {client.email && (
+            <div className="dash-detail-row">
+              <dt className="dash-detail-label">Email</dt>
+              <dd className="dash-detail-value">
+                <a href={`mailto:${client.email}`} className="dash-link">{client.email}</a>
+              </dd>
+            </div>
+          )}
           {client.phone && (
             <div className="dash-detail-row">
               <dt className="dash-detail-label">Phone</dt>

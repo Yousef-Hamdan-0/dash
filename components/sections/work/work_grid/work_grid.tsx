@@ -40,7 +40,7 @@ export default function WorkGrid() {
               : (catLabels[project.category]   ?? project.category)
 
             return (
-              <div key={project.id} className={styles.card}>
+              <div key={project.id} id={`project-${project.id}`} className={styles.card}>
                 <div className={`${styles.img} ${colorMap[project.color_class]}`}>
                   {project.image_url ? (
                     <Image
@@ -68,7 +68,7 @@ export default function WorkGrid() {
                   </div>
                   <div className={styles.title}>{title}</div>
                   <p className={styles.desc}>{desc}</p>
-                  <a href="#" className={styles.link}>{t('viewProject')} →</a>
+                  <a href={`#project-${project.id}`} className={styles.link}>{t('viewProject')} →</a>
                 </div>
               </div>
             )

@@ -354,6 +354,20 @@
   background: var(--blue);
 }
 
+.carouselCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+
+.carouselCta:hover { text-decoration: underline; }
+
 
 .badge {
   position: absolute;

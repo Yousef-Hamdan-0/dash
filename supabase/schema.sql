@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   logo_url        TEXT,
   contact_email   TEXT,
   from_email      TEXT DEFAULT 'onboarding@resend.dev',
+  team_phone      TEXT,
   instagram       TEXT,
   twitter         TEXT,
   linkedin        TEXT,
@@ -29,14 +30,20 @@ CREATE TABLE IF NOT EXISTS clients (
   phone       TEXT,
   service     TEXT NOT NULL,
   message     TEXT NOT NULL,
+  request_description TEXT,
+  request_type TEXT,
   source      TEXT NOT NULL DEFAULT 'website' CHECK (source IN ('website', 'services')),
   status      TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'qualified', 'closed')),
+  seen_at     TIMESTAMPTZ,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS clients_created_at_idx ON clients (created_at DESC);
 CREATE INDEX IF NOT EXISTS clients_status_idx ON clients (status);
+CREATE INDEX IF NOT EXISTS clients_seen_at_idx ON clients (seen_at) WHERE seen_at IS NULL;
+CREATE INDEX IF NOT EXISTS clients_name_idx ON clients (name);
+CREATE INDEX IF NOT EXISTS clients_phone_idx ON clients (phone);
 
 -- Projects (portfolio)
 CREATE TABLE IF NOT EXISTS projects (
@@ -79,6 +86,39 @@ CREATE TABLE IF NOT EXISTS testimonials (
   created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Public experience timeline, managed from the dashboard
+CREATE TABLE IF NOT EXISTS journey_items (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  year           INTEGER NOT NULL,
+  title          TEXT NOT NULL,
+  description    TEXT,
+  chips          TEXT[] DEFAULT '{}',
+  sort_order     INTEGER DEFAULT 0,
+  is_active      BOOLEAN DEFAULT true,
+  created_at     TIMESTAMPTZ DEFAULT NOW(),
+  updated_at     TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS journey_items_active_sort_idx
+  ON journey_items (is_active, year, sort_order);
+
+-- Announcement and achievement cards shown in the home hero
+CREATE TABLE IF NOT EXISTS home_announcements (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title          TEXT NOT NULL,
+  description    TEXT,
+  image_url      TEXT,
+  button_text    TEXT,
+  button_url     TEXT,
+  sort_order     INTEGER DEFAULT 0,
+  is_active      BOOLEAN DEFAULT true,
+  created_at     TIMESTAMPTZ DEFAULT NOW(),
+  updated_at     TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS home_announcements_active_sort_idx
+  ON home_announcements (is_active, sort_order);
+
 -- ─── Row Level Security ───────────────────────────────────────────────────────
 
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
@@ -86,14 +126,25 @@ ALTER TABLE projects       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE team_members   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE testimonials   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE clients        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE journey_items  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE home_announcements ENABLE ROW LEVEL SECURITY;
 
 -- Public can read (website)
+DROP POLICY IF EXISTS "public_select_settings" ON site_settings;
+DROP POLICY IF EXISTS "public_select_projects" ON projects;
+DROP POLICY IF EXISTS "public_select_team_members" ON team_members;
+DROP POLICY IF EXISTS "public_select_testimonials" ON testimonials;
+DROP POLICY IF EXISTS "public_select_journey" ON journey_items;
+DROP POLICY IF EXISTS "public_select_announcements" ON home_announcements;
 CREATE POLICY "public_select_settings"      ON site_settings FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "public_select_projects"      ON projects       FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "public_select_team_members"  ON team_members   FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "public_select_testimonials"  ON testimonials   FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "public_select_journey"       ON journey_items  FOR SELECT TO anon, authenticated USING (is_active = true);
+CREATE POLICY "public_select_announcements" ON home_announcements FOR SELECT TO anon, authenticated USING (is_active = true);
 
 -- Visitors may submit an enquiry, but cannot read client records.
+DROP POLICY IF EXISTS "public_insert_clients" ON clients;
 CREATE POLICY "public_insert_clients" ON clients
   FOR INSERT TO anon
   WITH CHECK (
@@ -102,17 +153,46 @@ CREATE POLICY "public_insert_clients" ON clients
     AND position('@' IN email) > 1
     AND char_length(service) BETWEEN 1 AND 160
     AND char_length(message) BETWEEN 1 AND 3000
-    AND (phone IS NULL OR char_length(phone) BETWEEN 5 AND 40)
-    AND (source = 'website' OR phone IS NOT NULL)
+    AND char_length(phone) BETWEEN 5 AND 40
+    AND source IN ('website', 'services')
     AND status = 'new'
+    AND seen_at IS NULL
   );
 
 -- Authenticated (admin) can mutate
+DROP POLICY IF EXISTS "admin_all_settings" ON site_settings;
+DROP POLICY IF EXISTS "admin_all_projects" ON projects;
+DROP POLICY IF EXISTS "admin_all_team" ON team_members;
+DROP POLICY IF EXISTS "admin_all_testimonials" ON testimonials;
+DROP POLICY IF EXISTS "admin_all_clients" ON clients;
+DROP POLICY IF EXISTS "admin_all_journey" ON journey_items;
+DROP POLICY IF EXISTS "admin_all_announcements" ON home_announcements;
 CREATE POLICY "admin_all_settings"     ON site_settings FOR ALL TO authenticated USING (true) WITH CHECK (true);
 CREATE POLICY "admin_all_projects"     ON projects       FOR ALL TO authenticated USING (true) WITH CHECK (true);
 CREATE POLICY "admin_all_team"         ON team_members   FOR ALL TO authenticated USING (true) WITH CHECK (true);
 CREATE POLICY "admin_all_testimonials" ON testimonials   FOR ALL TO authenticated USING (true) WITH CHECK (true);
 CREATE POLICY "admin_all_clients"      ON clients        FOR ALL TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "admin_all_journey"      ON journey_items  FOR ALL TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "admin_all_announcements" ON home_announcements FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- Shared updated_at trigger for dashboard-managed content
+CREATE OR REPLACE FUNCTION public.set_updated_at()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS journey_items_updated_at ON journey_items;
+CREATE TRIGGER journey_items_updated_at
+  BEFORE UPDATE ON journey_items
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
+
+DROP TRIGGER IF EXISTS home_announcements_updated_at ON home_announcements;
+CREATE TRIGGER home_announcements_updated_at
+  BEFORE UPDATE ON home_announcements
+  FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
 -- ─── Supabase Storage ────────────────────────────────────────────────────────
 -- Run in Storage > Buckets after creating the bucket named "media":

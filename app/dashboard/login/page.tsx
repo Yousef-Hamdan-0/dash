@@ -1,5 +1,6 @@
 import { isSupabaseConfigured } from '@/lib/supabase/config'
 import LoginForm from './login-form'
+import DashLogo from '@/app/dashboard/components/dash-logo'
 
 export default function LoginPage() {
   if (!isSupabaseConfigured()) {
@@ -7,10 +8,7 @@ export default function LoginPage() {
       <div className="dash-login">
         <div className="dash-login__card">
           <div className="dash-login__head">
-            <span className="dash-logo">
-              DASH
-              <span className="dash-logo__dot" />
-            </span>
+            <DashLogo />
           </div>
           <div className="dash-login__form">
             <h1 className="dash-section-title">Supabase is not configured</h1>

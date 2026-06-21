@@ -2,22 +2,14 @@ import styles from './hero_section.module.css'
 import Button from '@/components/ui/buttons/button'
 import SectionLabel from '@/components/ui/sectionlabel'
 import { getTranslations } from 'next-intl/server'
-import { getLocale } from 'next-intl/server'
-import { getTeamMembers } from '@/lib/supabase/queries'
-import HeroTeamCarousel from './hero_team_carousel'
-
-
+import { getAnnouncements } from '@/lib/supabase/queries'
+import HeroAnnouncementsCarousel from './hero_announcements_carousel'
 
 export default async function HeroSection() {
-  const [t, locale, team] = await Promise.all([
+  const [t, announcements] = await Promise.all([
     getTranslations('home_hero'),
-    getLocale(),
-    getTeamMembers(),
+    getAnnouncements(),
   ])
-  const isArabic = locale === 'ar'
-  const specialistLabel = isArabic
-    ? `${team.length} ${team.length === 1 ? 'متخصص' : 'متخصصين'}`
-    : `${team.length} ${team.length === 1 ? 'Specialist' : 'Specialists'}`
 
   return (
     <div className={styles.wrap}>
@@ -40,13 +32,13 @@ export default async function HeroSection() {
         {/* RIGHT */}
         <div className={styles.right}>
           <div className={styles.img}>
-            <HeroTeamCarousel members={team} />
+            <HeroAnnouncementsCarousel announcements={announcements} />
           </div>
           <div className={styles.badge}>
             <div className={styles.badgeIcon}>✦</div>
             <div>
-              <div className={styles.badgeTitle}>{specialistLabel}</div>
-              <div className={styles.badgeSub}>{isArabic ? 'اتجاه واحد' : 'One direction'}</div>
+              <div className={styles.badgeTitle}>{t('updatesTitle')}</div>
+              <div className={styles.badgeSub}>{t('updatesSubtitle')}</div>
             </div>
           </div>
         </div>

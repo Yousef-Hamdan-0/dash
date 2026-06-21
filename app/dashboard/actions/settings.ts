@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { getUploadFieldError } from './upload-fields'
 import { PUBLIC_SITE_CACHE_TAG } from '@/lib/cache-tags'
+import { normalizeExternalUrl } from '@/lib/safe-url'
 
 export async function updateSettings(_prev: unknown, formData: FormData) {
   const supabase = await createClient()
@@ -13,20 +14,50 @@ export async function updateSettings(_prev: unknown, formData: FormData) {
   const uploadError = getUploadFieldError(formData, 'logo_url', 'Logo')
   if (uploadError) return { error: uploadError }
 
-  // Upsert: update the single settings row (or insert if missing)
-  const { error } = await supabase.from('site_settings').upsert({
+  const contactEmail = String(formData.get('contact_email') ?? '').trim()
+  const fromEmail = String(formData.get('from_email') ?? '').trim()
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (contactEmail && !emailPattern.test(contactEmail)) return { error: 'Contact email is invalid.' }
+  if (fromEmail && !emailPattern.test(fromEmail)) return { error: 'From email is invalid.' }
+
+  const socialFields = ['instagram', 'twitter', 'linkedin', 'behance'] as const
+  const socialLinks: Record<(typeof socialFields)[number], string | null> = {
+    instagram: null,
+    twitter: null,
+    linkedin: null,
+    behance: null,
+  }
+
+  for (const field of socialFields) {
+    const raw = String(formData.get(field) ?? '').trim()
+    const normalized = normalizeExternalUrl(raw)
+    if (raw && !normalized) return { error: `${field} must be a complete http(s) URL.` }
+    socialLinks[field] = normalized
+  }
+
+  const values = {
     site_name:       String(formData.get('site_name') ?? 'DASH Studio'),
-    contact_email:   String(formData.get('contact_email') ?? ''),
-    from_email:      String(formData.get('from_email') ?? ''),
-    instagram:       String(formData.get('instagram') ?? '') || null,
-    twitter:         String(formData.get('twitter') ?? '') || null,
-    linkedin:        String(formData.get('linkedin') ?? '') || null,
-    behance:         String(formData.get('behance') ?? '') || null,
+    contact_email:   contactEmail || null,
+    from_email:      fromEmail || null,
+    team_phone:      String(formData.get('team_phone') ?? '').trim() || null,
+    ...socialLinks,
     seo_title:       String(formData.get('seo_title') ?? ''),
     seo_description: String(formData.get('seo_description') ?? ''),
     logo_url:        String(formData.get('logo_url') ?? '') || null,
     updated_at:      new Date().toISOString(),
-  })
+  }
+
+  const { data: existing, error: lookupError } = await supabase
+    .from('site_settings')
+    .select('id')
+    .limit(1)
+    .maybeSingle()
+
+  if (lookupError) return { error: lookupError.message }
+
+  const { error } = existing
+    ? await supabase.from('site_settings').update(values).eq('id', existing.id)
+    : await supabase.from('site_settings').insert(values)
 
   if (error) return { error: error.message }
 

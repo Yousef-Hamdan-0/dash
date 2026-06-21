@@ -21,19 +21,38 @@
 
 .links {
     display: flex;
-    gap: 24px;
+    align-items: center;
+    gap: 10px;
     list-style: none;
 }
 
 .links a {
-    font-size: 12px;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 9px;
     color: rgba(255,255,255,.32);
     text-decoration: none;
-    transition: color .2s;
+    transition: color .2s, border-color .2s, background-color .2s, transform .2s;
 }
 
 .links a:hover {
     color: #fff;
+    border-color: rgba(255,255,255,.24);
+    background: rgba(255,255,255,.07);
+    transform: translateY(-2px);
+}
+
+.links svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 @media (max-width: 760px) {

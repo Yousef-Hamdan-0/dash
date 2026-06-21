@@ -18,6 +18,8 @@ export default async function WorkSection() {
   const preview  = projects.slice(0, 6)
   const isAr     = locale === 'ar'
 
+  if (preview.length === 0) return null
+
   return (
     <section className={styles.sec} id="work">
       <div className={styles.wrap}>
@@ -57,7 +59,7 @@ export default async function WorkSection() {
                   <span className={styles.tag}>{cat}</span>
                   <div className={styles.title}>{title}</div>
                   <div className={styles.desc}>{desc}</div>
-                  <a href="#" className={styles.link}>{t('viewProject')} →</a>
+                  <Link href={`/work#project-${p.id}`} className={styles.link}>{t('viewProject')} →</Link>
                 </div>
               </div>
             )

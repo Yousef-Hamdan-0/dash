@@ -50,6 +50,13 @@ textarea {
   line-height: 1;
 }
 
+.dash-logo-img {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
 .dash-logo__dot {
   width: 8px;
   height: 8px;
@@ -1003,6 +1010,89 @@ textarea {
 
 .dash-danger-card {
   border-color: #fecaca;
+}
+
+/* ── Modal dialog ────────────────────────────────────────────────────────── */
+
+.dash-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(520px, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  margin: auto;
+  padding: 0;
+  border: none;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(17, 17, 24, .20);
+  overflow: hidden;
+}
+
+.dash-dialog::backdrop {
+  background: rgba(17, 17, 24, .48);
+  backdrop-filter: blur(4px);
+}
+
+.dash-dialog__panel {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  overflow: hidden;
+}
+
+.dash-dialog__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e4e5ef;
+  flex-shrink: 0;
+}
+
+.dash-dialog__title {
+  color: #111118;
+  font-family: var(--font-playfair), var(--ff-h), Georgia, serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.dash-dialog__close {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e4e5ef;
+  border-radius: 8px;
+  background: #f5f6fa;
+  color: #3a3a4a;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color .18s, border-color .18s;
+}
+
+.dash-dialog__close:hover {
+  border-color: #004bab;
+  color: #004bab;
+  background: #ebf0fc;
+}
+
+.dash-dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.dash-dialog__actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #edf0f6;
+  margin-top: 8px;
 }
 
 @media (max-width: 640px) {

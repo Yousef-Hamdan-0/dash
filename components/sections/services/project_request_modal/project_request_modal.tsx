@@ -1,11 +1,11 @@
 'use client'
 
-import { createContext, useContext, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import styles from './project_request_modal.module.css'
 
-interface ContactInfo {
+export interface ContactInfo {
   email: string
   phone?: string | null
   whatsapp?: string | null
@@ -13,10 +13,6 @@ interface ContactInfo {
   twitter?: string | null
   linkedin?: string | null
   behance?: string | null
-}
-
-interface ProjectRequestContextValue {
-  openRequest: (serviceTitle: string) => void
 }
 
 interface ProjectRequestProviderProps {
@@ -30,7 +26,7 @@ interface ProjectRequestButtonProps {
   label: string
 }
 
-const ProjectRequestContext = createContext<ProjectRequestContextValue | null>(null)
+const PROJECT_REQUEST_EVENT = 'dash:project-request'
 
 function hasValue(value?: string | null): value is string {
   return Boolean(value?.trim())
@@ -45,6 +41,36 @@ export function ProjectRequestProvider({ children, contact }: ProjectRequestProv
   const [target, setTarget] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
+  useEffect(() => {
+    function openRequest(event: Event) {
+      const serviceTitle = (event as CustomEvent<string>).detail
+      if (serviceTitle) setTarget(serviceTitle)
+    }
+
+    window.addEventListener(PROJECT_REQUEST_EVENT, openRequest)
+    return () => window.removeEventListener(PROJECT_REQUEST_EVENT, openRequest)
+  }, [])
+
+  useEffect(() => {
+    if (!target) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setTarget(null)
+        setStatus('idle')
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [target])
 
   const links = useMemo(() => {
     const items = [
@@ -101,7 +127,7 @@ export function ProjectRequestProvider({ children, contact }: ProjectRequestProv
   }
 
   return (
-    <ProjectRequestContext.Provider value={{ openRequest: setTarget }}>
+    <>
       {children}
       {target && createPortal(
         <div
@@ -218,18 +244,16 @@ export function ProjectRequestProvider({ children, contact }: ProjectRequestProv
         </div>,
         document.body
       )}
-    </ProjectRequestContext.Provider>
+    </>
   )
 }
 
 export function ProjectRequestButton({ serviceTitle, className, label }: ProjectRequestButtonProps) {
-  const context = useContext(ProjectRequestContext)
-
   return (
     <button
       type="button"
       className={className}
-      onClick={() => context?.openRequest(serviceTitle)}
+      onClick={() => window.dispatchEvent(new CustomEvent(PROJECT_REQUEST_EVENT, { detail: serviceTitle }))}
     >
       {label}
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">

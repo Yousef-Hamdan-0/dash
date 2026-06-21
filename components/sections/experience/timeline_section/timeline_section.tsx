@@ -1,10 +1,14 @@
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { getJourneyItems } from '@/lib/supabase/queries'
 import styles from './timeline_section.module.css'
 
-const years = ['2020', '2021', '2022', '2023', '2024', '2025'] as const
+export default async function TimelineSection() {
+  const [t, items] = await Promise.all([
+    getTranslations('exp.timeline'),
+    getJourneyItems(),
+  ])
 
-export default function TimelineSection() {
-  const t = useTranslations('exp.timeline')
+  if (items.length === 0) return null
 
   return (
     <section className={styles.sec}>
@@ -17,18 +21,25 @@ export default function TimelineSection() {
 
         <div className={styles.tl}>
           <div className={styles.line} />
-          {years.map((yr, i) => (
-            <div key={yr} className={`${styles.item} ${i >= years.length - 2 ? styles.active : ''}`}>
+          {items.map((item, i) => (
+            <div
+              key={item.id}
+              className={`${styles.item} ${i >= items.length - 2 ? styles.active : ''}`}
+            >
               <div className={styles.dot} />
-              <div className={styles.year}>{yr}</div>
+              <div className={styles.year}>{item.year}</div>
               <div className={styles.content}>
-                <div className={styles.title}>{t(`items.${i}.title`)}</div>
-                <p className={styles.body}>{t(`items.${i}.body`)}</p>
-                <div className={styles.chips}>
-                  {[0, 1, 2].map(j => (
-                    <span key={j} className={styles.chip}>{t(`items.${i}.chips.${j}`)}</span>
-                  ))}
-                </div>
+                <div className={styles.title}>{item.title}</div>
+                {item.description && (
+                  <p className={styles.body}>{item.description}</p>
+                )}
+                {item.chips.length > 0 && (
+                  <div className={styles.chips}>
+                    {item.chips.map((chip, j) => (
+                      <span key={j} className={styles.chip}>{chip}</span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

@@ -52,6 +52,7 @@ export interface DbSiteSettings {
   logo_url:        string | null
   contact_email:   string | null
   from_email:      string | null
+  team_phone:      string | null
   instagram:       string | null
   twitter:         string | null
   linkedin:        string | null
@@ -62,16 +63,44 @@ export interface DbSiteSettings {
 }
 
 export interface DbClient {
-  id:         string
-  name:       string
-  email:      string
-  phone:      string | null
-  service:    string
-  message:    string
-  source:     'website' | 'services'
-  status:     'new' | 'contacted' | 'qualified' | 'closed'
-  created_at: string
-  updated_at: string
+  id:                  string
+  name:                string
+  email:               string
+  phone:               string | null
+  service:             string
+  message:             string
+  request_description: string | null
+  request_type:        string | null
+  source:              'website' | 'services'
+  status:              'new' | 'contacted' | 'qualified' | 'closed'
+  seen_at:             string | null
+  created_at:          string
+  updated_at:          string
+}
+
+export interface DbJourneyItem {
+  id:          string
+  year:        number
+  title:       string
+  description: string | null
+  chips:       string[]
+  sort_order:  number
+  is_active:   boolean
+  created_at:  string
+  updated_at:  string
+}
+
+export interface DbAnnouncement {
+  id:          string
+  title:       string
+  description: string | null
+  image_url:   string | null
+  button_text: string | null
+  button_url:  string | null
+  sort_order:  number
+  is_active:   boolean
+  created_at:  string
+  updated_at:  string
 }
 
 export interface SiteStats {
@@ -382,9 +411,108 @@ export async function getNewClientsCount(): Promise<number> {
   const { count, error } = await supabase
     .from('clients')
     .select('*', { count: 'exact', head: true })
-    .eq('status', 'new')
+    .is('seen_at', null)
   if (error) { console.error('getNewClientsCount:', error.message); return 0 }
   return count ?? 0
+}
+
+// ─── Journey ──────────────────────────────────────────────────────────────────
+
+const legacyDemoJourneyTitles = new Set([
+  'DASH Studio Founded',
+  'First Client Projects',
+])
+
+function isLegacyDemoJourneyItem(item: DbJourneyItem) {
+  return legacyDemoJourneyTitles.has(item.title)
+    && item.created_at === item.updated_at
+    && item.year === 2026
+}
+
+async function fetchJourneyItems(): Promise<DbJourneyItem[]> {
+  const supabase = createOptionalPublicClient()
+  if (!supabase) return []
+  const { data, error } = await supabase
+    .from('journey_items')
+    .select('*')
+    .eq('is_active', true)
+    .order('year', { ascending: true })
+    .order('sort_order', { ascending: true })
+  if (error) { console.error('getJourneyItems:', error.message); return [] }
+  return (data ?? []).filter((item) => !isLegacyDemoJourneyItem(item))
+}
+
+export const getJourneyItems = unstable_cache(
+  fetchJourneyItems,
+  ['dash-public-journey-items-v2'],
+  { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
+)
+
+export async function getAllJourneyItems(): Promise<DbJourneyItem[]> {
+  const supabase = await createOptionalAuthedClient()
+  if (!supabase) return []
+  const { data, error } = await supabase
+    .from('journey_items')
+    .select('*')
+    .order('year', { ascending: true })
+    .order('sort_order', { ascending: true })
+  if (error) { console.error('getAllJourneyItems:', error.message); return [] }
+  return data ?? []
+}
+
+export async function getJourneyItemById(id: string): Promise<DbJourneyItem | null> {
+  const supabase = await createOptionalAuthedClient()
+  if (!supabase) return null
+  const { data, error } = await supabase
+    .from('journey_items')
+    .select('*')
+    .eq('id', id)
+    .single()
+  if (error) { console.error('getJourneyItemById:', error.message); return null }
+  return data
+}
+
+// ─── Announcements ─────────────────────────────────────────────────────────────
+
+async function fetchAnnouncements(): Promise<DbAnnouncement[]> {
+  const supabase = createOptionalPublicClient()
+  if (!supabase) return []
+  const { data, error } = await supabase
+    .from('home_announcements')
+    .select('*')
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true })
+  if (error) { console.error('getAnnouncements:', error.message); return [] }
+  return data ?? []
+}
+
+export const getAnnouncements = unstable_cache(
+  fetchAnnouncements,
+  ['dash-public-announcements-v1'],
+  { tags: [PUBLIC_SITE_CACHE_TAG], revalidate: 300 }
+)
+
+export async function getAllAnnouncements(): Promise<DbAnnouncement[]> {
+  const supabase = await createOptionalAuthedClient()
+  if (!supabase) return []
+  const { data, error } = await supabase
+    .from('home_announcements')
+    .select('*')
+    .order('sort_order', { ascending: true })
+  if (error) { console.error('getAllAnnouncements:', error.message); return [] }
+  return data ?? []
+}
+
+export async function getAnnouncementById(id: string): Promise<DbAnnouncement | null> {
+  const supabase = await createOptionalAuthedClient()
+  if (!supabase) return null
+  const { data, error } = await supabase
+    .from('home_announcements')
+    .select('*')
+    .eq('id', id)
+    .single()
+  if (error) { console.error('getAnnouncementById:', error.message); return null }
+  return data
 }
 
 // ─── Site Stats ───────────────────────────────────────────────────────────────

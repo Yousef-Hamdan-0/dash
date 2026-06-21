@@ -8,6 +8,8 @@ export default async function TestimonialsSection() {
   const testimonials = await getTestimonials()
   const isAr         = locale === 'ar'
 
+  if (testimonials.length === 0) return null
+
   return (
     <section className={styles.sec}>
       <div className={styles.wrap}>
