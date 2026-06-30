@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/auth'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getUploadFieldError } from './upload-fields'
@@ -8,8 +8,7 @@ import { getNextProjectId } from '@/lib/project-id'
 import { PUBLIC_SITE_CACHE_TAG } from '@/lib/cache-tags'
 
 export async function createProject(_prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const uploadError = getUploadFieldError(formData, 'image_url', 'Cover image')
@@ -50,8 +49,7 @@ export async function createProject(_prev: unknown, formData: FormData) {
 }
 
 export async function updateProject(id: string, _prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const uploadError = getUploadFieldError(formData, 'image_url', 'Cover image')
@@ -78,8 +76,7 @@ export async function updateProject(id: string, _prev: unknown, formData: FormDa
 }
 
 export async function deleteProject(id: string): Promise<void> {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) throw new Error('Unauthorized')
 
   const { error } = await supabase.from('projects').delete().eq('id', id)

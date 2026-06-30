@@ -3,11 +3,21 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSiteSettings } from '@/lib/supabase/queries'
 import { createPublicClient } from '@/lib/supabase/public'
 import { isSupabaseConfigured } from '@/lib/supabase/config'
+import { isValidEmail } from '@/lib/validation'
+import { rateLimit, pruneRateLimitBuckets } from '@/lib/rate-limit'
 
 const resendApiKey = process.env.RESEND_API_KEY
 const resend = resendApiKey ? new Resend(resendApiKey) : null
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+// Max submissions per IP per window
+const RATE_LIMIT = 5
+const RATE_WINDOW_MS = 60_000
+
+function getClientIp(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-for')
+  if (forwarded) return forwarded.split(',')[0].trim()
+  return req.headers.get('x-real-ip')?.trim() || 'unknown'
+}
 
 function textField(value: unknown, maxLength: number) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : ''
@@ -23,6 +33,19 @@ function escapeHtml(str: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  pruneRateLimitBuckets()
+  const { allowed, retryAfterSeconds } = rateLimit(
+    `contact:${getClientIp(req)}`,
+    RATE_LIMIT,
+    RATE_WINDOW_MS
+  )
+  if (!allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again shortly.' },
+      { status: 429, headers: { 'Retry-After': String(retryAfterSeconds) } }
+    )
+  }
+
   let body: Record<string, unknown>
 
   try {
@@ -42,7 +65,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Name, email, phone, project, and message are required' }, { status: 400 })
   }
 
-  if (!emailPattern.test(email)) {
+  if (!isValidEmail(email)) {
     return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
   }
 

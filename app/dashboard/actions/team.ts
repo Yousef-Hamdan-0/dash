@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/auth'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getUploadFieldError } from './upload-fields'
@@ -23,8 +24,7 @@ async function generateNextInitials(supabase: Awaited<ReturnType<typeof createCl
 }
 
 export async function createTeamMember(_prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const uploadError = getUploadFieldError(formData, 'image_url', 'Photo')
@@ -57,8 +57,7 @@ export async function createTeamMember(_prev: unknown, formData: FormData) {
 }
 
 export async function updateTeamMember(id: string, _prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const uploadError = getUploadFieldError(formData, 'image_url', 'Photo')
@@ -89,8 +88,7 @@ export async function updateTeamMember(id: string, _prev: unknown, formData: For
 }
 
 export async function deleteTeamMember(id: string): Promise<void> {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) throw new Error('Unauthorized')
 
   const { error } = await supabase.from('team_members').delete().eq('id', id)

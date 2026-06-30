@@ -2,8 +2,9 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/auth'
 import { isSupabaseConfigured } from '@/lib/supabase/config'
+import { isValidEmail } from '@/lib/validation'
 import type { DbClient } from '@/lib/supabase/queries'
 
 export async function updateClientStatus(
@@ -16,8 +17,7 @@ export async function updateClientStatus(
     return { error: 'Invalid client status.' }
   }
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const { error } = await supabase
@@ -38,8 +38,7 @@ export async function markClientsSeen(ids: string[]): Promise<void> {
   const validIds = ids.filter((id) => /^[0-9a-f-]{36}$/i.test(id)).slice(0, 250)
   if (validIds.length === 0) return
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return
 
   await supabase
@@ -55,8 +54,7 @@ export async function markClientsSeen(ids: string[]): Promise<void> {
 export async function deleteClient(id: string): Promise<void> {
   if (!isSupabaseConfigured()) return
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) throw new Error('Unauthorized')
 
   const { error } = await supabase.from('clients').delete().eq('id', id)
@@ -72,8 +70,7 @@ export async function createClientManual(
 ): Promise<{ error?: string; success?: boolean }> {
   if (!isSupabaseConfigured()) return { error: 'Supabase is not configured.' }
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const name  = String(formData.get('name') ?? '').trim()
@@ -86,7 +83,7 @@ export async function createClientManual(
   if (!phone) return { error: 'Phone number is required.' }
   if (!email) return { error: 'Email address is required.' }
 
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (email && !isValidEmail(email)) {
     return { error: 'Invalid email address.' }
   }
 

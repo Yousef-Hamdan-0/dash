@@ -3,6 +3,7 @@ import createIntlMiddleware from 'next-intl/middleware'
 import { createServerClient } from '@supabase/ssr'
 import { routing } from './i18n/routing'
 import { getSupabaseConfig } from './lib/supabase/config'
+import { isAllowedAdminEmail } from './lib/validation'
 
 const intlMiddleware = createIntlMiddleware(routing)
 const locales = routing.locales as readonly string[]
@@ -82,12 +83,15 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user && pathname !== '/dashboard/login') {
+  // Authenticated AND on the ADMIN_EMAILS allowlist (allowlist no-ops when unset)
+  const isAdmin = !!user && isAllowedAdminEmail(user.email)
+
+  if (!isAdmin && pathname !== '/dashboard/login') {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard/login'
     return NextResponse.redirect(url)
   }
-  if (user && pathname === '/dashboard/login') {
+  if (isAdmin && pathname === '/dashboard/login') {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)

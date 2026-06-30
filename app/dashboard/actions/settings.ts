@@ -1,14 +1,14 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/auth'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { getUploadFieldError } from './upload-fields'
 import { PUBLIC_SITE_CACHE_TAG } from '@/lib/cache-tags'
 import { normalizeExternalUrl } from '@/lib/safe-url'
+import { isValidEmail } from '@/lib/validation'
 
 export async function updateSettings(_prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const uploadError = getUploadFieldError(formData, 'logo_url', 'Logo')
@@ -16,9 +16,8 @@ export async function updateSettings(_prev: unknown, formData: FormData) {
 
   const contactEmail = String(formData.get('contact_email') ?? '').trim()
   const fromEmail = String(formData.get('from_email') ?? '').trim()
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (contactEmail && !emailPattern.test(contactEmail)) return { error: 'Contact email is invalid.' }
-  if (fromEmail && !emailPattern.test(fromEmail)) return { error: 'From email is invalid.' }
+  if (contactEmail && !isValidEmail(contactEmail)) return { error: 'Contact email is invalid.' }
+  if (fromEmail && !isValidEmail(fromEmail)) return { error: 'From email is invalid.' }
 
   const socialFields = ['instagram', 'twitter', 'linkedin', 'behance'] as const
   const socialLinks: Record<(typeof socialFields)[number], string | null> = {

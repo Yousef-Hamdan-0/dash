@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/config'
+import { isAllowedAdminEmail } from '@/lib/validation'
 import { redirect } from 'next/navigation'
 
 export async function login(_prev: unknown, formData: FormData) {
@@ -21,6 +22,12 @@ export async function login(_prev: unknown, formData: FormData) {
 
   if (error) {
     return { error: 'Invalid credentials. Please try again.' }
+  }
+
+  // Enforce the admin allowlist (no-op when ADMIN_EMAILS is unset)
+  if (!isAllowedAdminEmail(email)) {
+    await supabase.auth.signOut()
+    return { error: 'This account is not authorized to access the dashboard.' }
   }
 
   redirect('/dashboard')

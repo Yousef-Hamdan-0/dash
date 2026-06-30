@@ -1,13 +1,12 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { requireAdmin } from '@/lib/auth'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { PUBLIC_SITE_CACHE_TAG } from '@/lib/cache-tags'
 
 export async function createTestimonial(_prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const { error } = await supabase.from('testimonials').insert({
@@ -27,8 +26,7 @@ export async function createTestimonial(_prev: unknown, formData: FormData) {
 }
 
 export async function updateTestimonial(id: string, _prev: unknown, formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) return { error: 'Unauthorized' }
 
   const { error } = await supabase.from('testimonials').update({
@@ -48,8 +46,7 @@ export async function updateTestimonial(id: string, _prev: unknown, formData: Fo
 }
 
 export async function deleteTestimonial(id: string): Promise<void> {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { supabase, user } = await requireAdmin()
   if (!user) throw new Error('Unauthorized')
 
   const { error } = await supabase.from('testimonials').delete().eq('id', id)
